@@ -1,960 +1,960 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IEEE EPI SB – Events</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IEEE EPI SB – Events</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-      :root {
-        --bg: #0a0d14;
-        --surface: #111520;
-        --surface-2: #181d2e;
-        --surface-3: #1f263d;
-        --border: rgba(255, 255, 255, 0.07);
-        --border-hover: rgba(255, 255, 255, 0.14);
-        --text: #e8ecf4;
-        --text-dim: rgba(232, 236, 244, 0.5);
-        --text-muted: rgba(232, 236, 244, 0.28);
-        --accent: #4f8ef7;
-        --accent-glow: rgba(79, 142, 247, 0.25);
+    :root {
+      --bg: #0a0d14;
+      --surface: #111520;
+      --surface-2: #181d2e;
+      --surface-3: #1f263d;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #e8ecf4;
+      --text-dim: rgba(232,236,244,0.5);
+      --text-muted: rgba(232,236,244,0.28);
+      --accent: #4f8ef7;
+      --accent-glow: rgba(79,142,247,0.25);
 
-        /* Chapter palette — vivid against dark bg */
-        --sb: #0b419f;
+      /* Chapter palette — vivid against dark bg */
+        --sb: #0b49b3;
         --ias: #045514;
-        --wie: #8c0896;
+        --wie: #a50ab0;
         --ras: #b9184e;
-        --cis: #278ed7;
-        --cs: #f38816;
+        --cis: #2577e3;
+        --cs: #fa880e;
 
-        --radius: 16px;
-        --radius-sm: 10px;
-      }
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
 
-      body {
-        font-family: "Space Grotesk", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-      /* ---- NOISE OVERLAY ---- */
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 0;
-      }
+    /* ---- NOISE OVERLAY ---- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
 
-      /* ---- AMBIENT GLOW ---- */
-      body::after {
-        content: "";
-        position: fixed;
-        top: -200px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 900px;
-        height: 600px;
-        background: radial-gradient(
-          ellipse at center,
-          rgba(79, 142, 247, 0.08) 0%,
-          transparent 70%
-        );
-        pointer-events: none;
-        z-index: 0;
-      }
+    /* ---- AMBIENT GLOW ---- */
+    body::after {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(79,142,247,0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-      /* ---- HEADER ---- */
+    /* ---- HEADER ---- */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 0 40px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,13,20,0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      border-radius: 0;
+      background: transparent;
+      display: block;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .brand-text span {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 40px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      letter-spacing: 0.2px;
+      box-shadow: 0 4px 20px rgba(79,142,247,0.35);
+      transition: all 0.2s ease;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(79,142,247,0.5);
+    }
+
+    .add-btn svg { width: 15px; height: 15px; }
+
+    /* ---- MAIN ---- */
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 36px 24px 80px;
+    }
+
+    /* ---- PAGE TITLE ---- */
+    .page-header {
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .page-subtitle {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      font-weight: 400;
+    }
+
+    /* ---- LEGEND ---- */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 40px;
+      padding: 5px 14px 5px 10px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .legend-item:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+    }
+
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ---- CALENDAR CARD ---- */
+    .calendar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .calendar-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-dim);
+      transition: all 0.18s;
+    }
+
+    .nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(79,142,247,0.3);
+    }
+
+    .nav-btn svg { width: 14px; height: 14px; }
+
+    .month-label {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    /* ---- GRID ---- */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+
+    .day-hdr {
+      padding: 10px 4px 8px;
+      text-align: center;
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .day-cell {
+      min-height: 96px;
+      padding: 8px 7px 6px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      transition: background 0.15s;
+    }
+
+    .day-cell:nth-child(7n) { border-right: none; }
+
+    .day-cell.other { background: rgba(255,255,255,0.01); }
+    .day-cell.other .day-num { color: var(--text-muted); }
+
+    .day-cell.today .day-num {
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(79,142,247,0.5);
+    }
+
+    .day-num {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    /* ---- EVENT CHIPS ---- */
+    .chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 5px 7px;
+      margin-bottom: 4px;
+      color: #fff;
+      cursor: default;
+      transition: opacity 0.12s, transform 0.12s;
+      letter-spacing: 0.1px;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 26px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .chip:hover { opacity: 0.9; }
+
+    .chip-label {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .chip-del {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      border: none;
+      color: #fff;
+      font-size: 10px;
+      line-height: 1;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.14s, transform 0.14s;
+      padding: 0;
+      font-weight: 700;
+    }
+
+    .chip-del:hover {
+      background: rgba(255,80,80,0.7);
+      transform: scale(1.15);
+    }
+
+    body.can-delete .chip-del { display: flex; }
+
+    /* ---- DELETE CONFIRM MODAL ---- */
+    .del-event-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .btn-danger {
+      width: 100%;
+      padding: 12px;
+      background: #ff5e5e;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      box-shadow: 0 4px 18px rgba(255,94,94,0.3);
+    }
+
+    .btn-danger:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255,94,94,0.45);
+    }
+
+    /* ---- TOOLTIP ---- */
+    .tooltip {
+      position: fixed;
+      background: var(--surface-3);
+      border: 1px solid var(--border-hover);
+      color: var(--text);
+      padding: 9px 13px;
+      border-radius: var(--radius-sm);
+      font-size: 0.78rem;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.14s;
+      max-width: 200px;
+      line-height: 1.5;
+      backdrop-filter: blur(10px);
+    }
+
+    .tooltip.on { opacity: 1; }
+    .tooltip strong { color: var(--text); font-weight: 600; }
+    .tooltip small { color: var(--text-dim); }
+
+    /* ---- MODALS ---- */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+      padding: 20px;
+    }
+
+    .overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 440px;
+      overflow: hidden;
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    }
+
+    .overlay.open .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-head {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-head-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .modal-icon {
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .modal-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .modal-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .close-btn {
+      width: 28px; height: 28px;
+      border: 1px solid var(--border);
+      background: transparent;
+      border-radius: 50%;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.15s;
+    }
+
+    .close-btn:hover {
+      background: var(--surface-3);
+      color: var(--text);
+    }
+
+    .modal-body { padding: 24px 28px; }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+
+    .form-group { margin-bottom: 18px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
+    }
+
+    input::placeholder { color: var(--text-muted); }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555e7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    select option { background: #1f263d; }
+
+    .msg {
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.83rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .msg.show { display: block; }
+
+    .msg-error {
+      background: rgba(255,94,94,0.1);
+      border: 1px solid rgba(255,94,94,0.3);
+      color: #ff8080;
+    }
+
+    .msg-success {
+      background: rgba(34,212,154,0.1);
+      border: 1px solid rgba(34,212,154,0.3);
+      color: #22d49a;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(79,142,247,0.3);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(79,142,247,0.45);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      margin-top: 10px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+      background: var(--surface-2);
+    }
+
+    .chapter-preview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .ch-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      border-radius: 4px;
+      padding: 3px 10px;
+      letter-spacing: 0.5px;
+    }
+
+    .ch-note {
+      font-size: 0.73rem;
+      color: var(--text-muted);
+    }
+
+    /* ---- RESPONSIVE ---- */
+
+    /* Tablet: tighten things up */
+    @media (max-width: 860px) {
+      header { padding: 0 20px; }
+      main { padding: 24px 16px 60px; }
+      .day-cell { min-height: 80px; padding: 6px 4px; }
+      .chip { font-size: 0.68rem; padding: 3px 5px; min-height: 22px; }
+    }
+
+    /* Mobile: switch calendar to agenda/list view */
+    @media (max-width: 600px) {
       header {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        padding: 0 40px;
-        height: 68px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background: rgba(10, 13, 20, 0.8);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
+        padding: 0 14px;
+        height: 58px;
       }
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-      }
+      .brand-mark { width: 34px; height: 34px; }
 
-      .brand-mark {
-        width: 44px;
-        height: 44px;
-        object-fit: contain;
-        border-radius: 0;
-        background: transparent;
-        display: block;
-      }
-
-      .brand-text strong {
-        display: block;
-        font-family: "Fraunces", serif;
-        font-weight: 600;
-        font-size: 1rem;
-        color: var(--text);
-        letter-spacing: -0.2px;
-      }
-
-      .brand-text span {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        letter-spacing: 1.2px;
-        text-transform: uppercase;
-      }
+      .brand-text strong { font-size: 0.88rem; }
+      .brand-text span   { display: none; }
 
       .add-btn {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 9px 20px;
-        background: var(--accent);
-        color: #fff;
-        border: none;
-        border-radius: 40px;
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 600;
-        font-size: 0.85rem;
-        cursor: pointer;
-        letter-spacing: 0.2px;
-        box-shadow: 0 4px 20px rgba(79, 142, 247, 0.35);
-        transition: all 0.2s ease;
-      }
-
-      .add-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(79, 142, 247, 0.5);
-      }
-
-      .add-btn svg {
-        width: 15px;
-        height: 15px;
-      }
-
-      /* ---- MAIN ---- */
-      main {
-        position: relative;
-        z-index: 1;
-        max-width: 1160px;
-        margin: 0 auto;
-        padding: 36px 24px 80px;
-      }
-
-      /* ---- PAGE TITLE ---- */
-      .page-header {
-        margin-bottom: 28px;
-      }
-
-      .page-title {
-        font-family: "Fraunces", serif;
-        font-weight: 300;
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
-        color: var(--text);
-        letter-spacing: -1px;
-        line-height: 1.1;
-      }
-
-      .page-title em {
-        font-style: italic;
-        color: var(--accent);
-      }
-
-      .page-subtitle {
-        margin-top: 6px;
-        font-size: 0.85rem;
-        color: var(--text-dim);
-        font-weight: 400;
-      }
-
-      /* ---- LEGEND ---- */
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 20px;
-      }
-
-      .legend-item {
-        display: flex;
-        align-items: center;
-        gap: 7px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 40px;
-        padding: 5px 14px 5px 10px;
-        font-size: 0.76rem;
-        font-weight: 500;
-        color: var(--text-dim);
-        transition:
-          border-color 0.15s,
-          color 0.15s;
-      }
-
-      .legend-item:hover {
-        border-color: var(--border-hover);
-        color: var(--text);
-      }
-
-      .legend-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-
-      /* ---- CALENDAR CARD ---- */
-      .calendar-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        overflow: hidden;
-      }
-
-      .calendar-nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 18px 24px;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .nav-btn {
-        width: 34px;
-        height: 34px;
-        border: 1px solid var(--border);
-        background: transparent;
-        border-radius: 50%;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-dim);
-        transition: all 0.18s;
-      }
-
-      .nav-btn:hover {
-        background: var(--accent);
-        border-color: var(--accent);
-        color: #fff;
-        box-shadow: 0 0 16px rgba(79, 142, 247, 0.3);
-      }
-
-      .nav-btn svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      .month-label {
-        font-family: "Fraunces", serif;
-        font-weight: 600;
-        font-size: 1.2rem;
-        color: var(--text);
-        letter-spacing: -0.3px;
-      }
-
-      /* ---- GRID ---- */
-      .cal-grid {
-        display: grid;
-        grid-template-columns: repeat(7, 1fr);
-      }
-
-      .day-hdr {
-        padding: 10px 4px 8px;
-        text-align: center;
-        font-size: 0.67rem;
-        font-weight: 600;
-        letter-spacing: 1.2px;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        border-bottom: 1px solid var(--border);
-      }
-
-      .day-cell {
-        min-height: 96px;
-        padding: 8px 7px 6px;
-        border-right: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-        vertical-align: top;
-        transition: background 0.15s;
-      }
-
-      .day-cell:nth-child(7n) {
-        border-right: none;
-      }
-
-      .day-cell.other {
-        background: rgba(255, 255, 255, 0.01);
-      }
-      .day-cell.other .day-num {
-        color: var(--text-muted);
-      }
-
-      .day-cell.today .day-num {
-        background: var(--accent);
-        color: #fff;
-        border-radius: 50%;
-        box-shadow: 0 0 12px rgba(79, 142, 247, 0.5);
-      }
-
-      .day-num {
-        width: 24px;
-        height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 8px 14px;
         font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--text-dim);
-        margin-bottom: 4px;
+        gap: 6px;
       }
+      .add-btn svg { width: 13px; height: 13px; }
 
-      /* ---- EVENT CHIPS ---- */
-      .chip {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 4px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 7px;
-        margin-bottom: 4px;
-        color: #fff;
-        cursor: default;
-        transition:
-          opacity 0.12s,
-          transform 0.12s;
-        letter-spacing: 0.1px;
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 26px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-      }
+      main { padding: 16px 12px 60px; }
 
-      .chip:hover {
-        opacity: 0.9;
-      }
+      .page-title { font-size: 1.6rem; }
+      .page-subtitle { font-size: 0.78rem; }
 
-      .chip-label {
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-      }
+      .legend { gap: 6px; margin-bottom: 14px; }
+      .legend-item { font-size: 0.7rem; padding: 4px 10px 4px 8px; }
+      .legend-dot { width: 7px; height: 7px; }
 
-      .chip-del {
-        flex-shrink: 0;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.22);
-        border: none;
-        color: #fff;
-        font-size: 10px;
-        line-height: 1;
-        cursor: pointer;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        transition:
-          background 0.14s,
-          transform 0.14s;
-        padding: 0;
-        font-weight: 700;
-      }
+      /* Hide the desktop grid calendar on mobile */
+      .cal-grid { display: none; }
 
-      .chip-del:hover {
-        background: rgba(255, 80, 80, 0.7);
-        transform: scale(1.15);
-      }
+      /* Show mobile agenda view instead */
+      .mobile-agenda { display: block; }
 
-      body.can-delete .chip-del {
-        display: flex;
-      }
+      .calendar-nav { padding: 14px 16px; }
+      .month-label { font-size: 1rem; }
 
-      /* ---- DELETE CONFIRM MODAL ---- */
-      .del-event-name {
-        font-weight: 600;
-        color: var(--text);
-      }
-
-      .btn-danger {
-        width: 100%;
-        padding: 12px;
-        background: #ff5e5e;
-        color: #fff;
-        border: none;
-        border-radius: var(--radius-sm);
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 600;
-        font-size: 0.88rem;
-        cursor: pointer;
-        transition: all 0.18s;
-        box-shadow: 0 4px 18px rgba(255, 94, 94, 0.3);
-      }
-
-      .btn-danger:hover {
-        opacity: 0.88;
-        transform: translateY(-1px);
-        box-shadow: 0 8px 24px rgba(255, 94, 94, 0.45);
-      }
-
-      /* ---- TOOLTIP ---- */
-      .tooltip {
-        position: fixed;
-        background: var(--surface-3);
-        border: 1px solid var(--border-hover);
-        color: var(--text);
-        padding: 9px 13px;
-        border-radius: var(--radius-sm);
-        font-size: 0.78rem;
-        pointer-events: none;
-        z-index: 999;
-        opacity: 0;
-        transition: opacity 0.14s;
-        max-width: 200px;
-        line-height: 1.5;
-        backdrop-filter: blur(10px);
-      }
-
-      .tooltip.on {
-        opacity: 1;
-      }
-      .tooltip strong {
-        color: var(--text);
-        font-weight: 600;
-      }
-      .tooltip small {
-        color: var(--text-dim);
-      }
-
-      /* ---- MODALS ---- */
-      .overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 500;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.22s ease;
-        padding: 20px;
-      }
-
-      .overlay.open {
-        opacity: 1;
-        pointer-events: all;
-      }
-
+      /* Modals full-screen on mobile */
+      .overlay { padding: 0; align-items: flex-end; }
       .modal {
-        background: var(--surface);
-        border: 1px solid var(--border-hover);
-        border-radius: var(--radius);
-        width: 100%;
-        max-width: 440px;
-        overflow: hidden;
-        transform: translateY(24px) scale(0.97);
-        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+        max-width: 100%;
+        border-radius: var(--radius) var(--radius) 0 0;
+        border-bottom: none;
       }
 
-      .overlay.open .modal {
-        transform: translateY(0) scale(1);
-      }
+      .modal-body { padding: 20px 20px 32px; }
+      .modal-head { padding: 18px 20px; }
+    }
 
-      .modal-head {
-        padding: 24px 28px;
-        border-bottom: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
+    /* ---- MOBILE AGENDA (hidden on desktop) ---- */
+    .mobile-agenda { display: none; }
 
-      .modal-head-left {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
+    .agenda-empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
 
-      .modal-icon {
-        font-size: 1.2rem;
-        line-height: 1;
-      }
+    .agenda-day-group {
+      border-bottom: 1px solid var(--border);
+    }
 
-      .modal-title {
-        font-family: "Fraunces", serif;
-        font-weight: 600;
-        font-size: 1.1rem;
-        color: var(--text);
-        letter-spacing: -0.2px;
-      }
+    .agenda-day-group:last-child { border-bottom: none; }
 
-      .modal-sub {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-      }
+    .agenda-day-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px 8px;
+      position: sticky;
+      top: 58px;
+      background: var(--surface);
+      z-index: 2;
+    }
 
-      .close-btn {
-        width: 28px;
-        height: 28px;
-        border: 1px solid var(--border);
-        background: transparent;
-        border-radius: 50%;
-        color: var(--text-dim);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        transition: all 0.15s;
-      }
+    .agenda-day-num {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
 
-      .close-btn:hover {
-        background: var(--surface-3);
-        color: var(--text);
-      }
+    .agenda-day-num.is-today {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(79,142,247,0.45);
+    }
 
-      .modal-body {
-        padding: 24px 28px;
-      }
+    .agenda-day-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
 
-      label {
-        display: block;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
-        color: var(--text-muted);
-        margin-bottom: 7px;
-      }
+    .agenda-events {
+      padding: 0 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-      .form-group {
-        margin-bottom: 18px;
-      }
+    .agenda-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.83rem;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    }
 
-      input[type="text"],
-      input[type="email"],
-      input[type="date"],
-      select {
-        width: 100%;
-        padding: 11px 14px;
-        background: var(--surface-2);
-        border: 1px solid var(--border);
-        border-radius: var(--radius-sm);
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 0.9rem;
-        color: var(--text);
-        outline: none;
-        transition:
-          border-color 0.16s,
-          box-shadow 0.16s;
-        appearance: none;
-        -webkit-appearance: none;
-      }
+    .agenda-chip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
 
-      input:focus,
-      select:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
-      }
+    .agenda-chip-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-      input::placeholder {
-        color: var(--text-muted);
-      }
+    .agenda-chip-meta {
+      font-size: 0.72rem;
+      font-weight: 500;
+      opacity: 0.78;
+      letter-spacing: 0.3px;
+    }
 
-      select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555e7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 14px center;
-        padding-right: 36px;
-        cursor: pointer;
-      }
+    .agenda-chip-del {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      font-size: 11px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.14s;
+    }
 
-      select option {
-        background: #1f263d;
-      }
+    .agenda-chip-del:hover { background: rgba(255,80,80,0.65); }
 
-      .msg {
-        border-radius: var(--radius-sm);
-        padding: 10px 14px;
-        font-size: 0.83rem;
-        margin-bottom: 14px;
-        display: none;
-      }
+    body.can-delete .agenda-chip-del { display: flex; }
 
-      .msg.show {
-        display: block;
-      }
+    /* ---- CALENDAR LOAD ANIMATION ---- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-      .msg-error {
-        background: rgba(255, 94, 94, 0.1);
-        border: 1px solid rgba(255, 94, 94, 0.3);
-        color: #ff8080;
-      }
+    .calendar-card {
+      animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
 
-      .msg-success {
-        background: rgba(34, 212, 154, 0.1);
-        border: 1px solid rgba(34, 212, 154, 0.3);
-        color: #22d49a;
-      }
+    .legend {
+      animation: fadeUp 0.4s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+    }
 
-      .btn {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: var(--radius-sm);
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 600;
-        font-size: 0.88rem;
-        cursor: pointer;
-        transition: all 0.18s;
-        letter-spacing: 0.2px;
-      }
+    .page-header {
+      animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+  </style>
+</head>
+<body>
 
-      .btn-primary {
-        background: var(--accent);
-        color: #fff;
-        box-shadow: 0 4px 18px rgba(79, 142, 247, 0.3);
-      }
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <img class="brand-mark" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAAMgCAMAAABLRj/JAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDkuMS1jMDAyIDc5LmE2YTYzOTY4YSwgMjAyNC8wMy8wNi0xMTo1MjowNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzdmZTcwOS0wMDdmLWNiNDAtOTg2MC1mMDJiZTdkNzIxZDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjlBRTkyQ0I3RDBDMTFFRkJBNUQ4QjNDMzlEREUxMjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjlBRTkyQ0E3RDBDMTFFRkJBNUQ4QjNDMzlEREUxMjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDI1LjkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTY0ODczODktMzE3OC02YTQyLTgwYWYtMWIyZDcwZDU1MjBlIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmMzN2ZlNzA5LTAwN2YtY2I0MC05ODYwLWYwMmJlN2Q3MjFkNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pt/j1KQAAAAGUExURf///////1V89WwAAAACdFJOU/8A5bcwSgAAID5JREFUeNrs3eFy5Kq1gFF4/5e+lUrqzjkznm4J2LCB9f1JKrHVEqBltdT2lCpJl1YMgSQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIAaAgkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSDgWw/DcTKek2AMuvTKWkqwAshYCS7gSw/JbZlHQJgOWHzKekGwAsAJQEQAJKugvAUggo6U4ACwAlXQpgKQSUdCeApRBQEgAJKOkqAAsAJV0KYCkElHQngKUQUNKdAJZCQEkABKCkqwAshYCS7gSwFAJKuhPAAkBJlwJYCgElAZCAkq4CsBQCSroTwAJASZcCWAoBJQGQgJKuArAUAkq6E8BSCCjpTgBLIaCkOwEsAJR0KYClEFASAAko6SoASyGgpDsBLIWAku4EsABQ0qUAlkJASQAkoKSrACyFgJLuBLAUAkq6E8ACQEmXAlgKASUBkICSrgKwFAJKuhPAUggo6U4ASyGgpDsBLIWAku4EsABQ0qUAlkJASXcC+BY0Ako6BcBGywgoPT/JjMHWALZ+ozmXAJgYwB7GThZw0f3QcmTLhn27469HH385y79H3w5AAF4PYHH8SQHsn7tTBVxzBhQAAhCASf37y3QCcNwpAEAAAjCjf5/m9EgBAQhAAJ4NYA9/bwgEIAAB4PizAdjr3z/n9TwBAQhAAF4N4KOvq+++CoDOfwMAwGP8Kw9/QQ6A1r8BAOA+J/iQ5yQAfDsAAAQgAPfy79lXA9D6NwAAPNK/R++DvQW2/g0AAHc4u1sm4zgBAQhAAB4K4Hj/zhMQgAAE4JkARvj3hEAAOv8NAAC38K/nKI8QEIAABOCJAMZc/h0nIAABCMADAQz07ygBAQhAAJ4HYCR/TwgEoPPfAAAw43k9Zg5OERCAAATgcQD2vH29S0AAAhCApwE4wb9TBAQgAAF4GIBT/Pv/je0tIAABCMCzAIy+/feYUwA6/w0AALP5F3DA+woIQAAC8CQAp13+nSEgAAEIwIMAnOvfVwIB6Pw3AAA817/dBQQgAAF4DIAL/NtcQAACEICnANh6q+5iAQEIQAAeAuAi/7YWEIAABOAZAC7zb+eHwQAEIACPAHChfxtfAwIQgAA8AcAvOzXp2LcTEIAABOABAA6+/KvtB7+XgAAEIAD3B3D0299aLhEQgAAE4PYADvev3iIgAAEIwN0BHO1fI4A7CghAAAJwcwCH+9cK4OdfOAGg898AAHAD/5oB3O8aEIAABODWAMb41zxHm10DAhCAANwZwJY3o5EAbiYgAAEIwI0BHH/5V3o/O72VgAAEIAD3BTDQv1puEBCAAATgtgDGCNY9SRsJCEAAAnBXAEP9u0NAAAIQgJsCGPsOtmuWthEQgAAE4J4ABr+B7ZylTQQEIAABuCWA4f5dISAAAQjAHQF8z85kAPcQEIAABOCGAEZd/w0EcAsBAQhAAG4HYAM5TXN4voAABCAADwFw4BvXQfP0YTMABCAAAZjr7e8fczhmRBJfAwIQgADcC8CJ/tVyuoAABCAAtwIw1L/hAGYXEIAAdPw7ATjVv2ABCwBnn3ln3nq9/fiz/X7ptv5FAJhbQAACEID7ABjsX6lxAuZ8GwxAAAJwGwDn+1fL2QICEIAA3ATAEu1fFICJ3wUDEIAA3APAeP9KvU5AAAIQgFsAuMi/Wo4WEIAABOAOAE7wLxLArAICEIAA3ADAGf6Vep+AAAQgAPMD2KLKqFEsEwQsAASA4wfgyuu/Ui8UEIAABGByAMuU678SP1sJBQQgAAG4KYB1NwATCghAAAIwNYCTrv8+DeIkAQsAAeD4AbjGvykAphMQgAAEYGIAvx3ylDEs5woIQAACMC+A8/wr9UoBAQhAAGYFsEz0bxqAuQQEIAABmBTAVkMChjDglXLMJQABCMCcAE69/psIYCoBAQhAAKYEMJN/tcwUsAAQAI7/cgDn+lfqAgEzzCcAAQjAfACWyf6VJSs2wYQCEIAATAdgOv+OFRCAAARgNgCn+1dWTdnyOQUgAAGYDMD5/i0AMMk1IAABCMBcAHZdN8WN33QBCwAB4PhvA7As8G8NgCkEBCAAAZgIwLT+xV13Lp1XAAIQgHkAXOLfKgCf3NEEIAAc/zUArvFvGYDl8VEDEACO/3QAS2r/Al964eQCEIAAzAHgKv9KzS0gAAHg+M8HcJl/H0ayzHrBZdMLQAACMAGA/Y8LAoaylOMFBCAAAbgewDT+zQewvBkBAALA8Z8HYB7/FgC4VEAAAhCAiwEcI8TuAK4REIAABOBaAFP5twLAhwcIQAA4/vMAzOXfEgDLq5EAIAAc/ykAlmT+rQFwnYAABCAA1wE46gbZGQAuEBCAAATgKgAHXhttDuDzwwQgABz/GQBm9G8VgKsEBCAAAbgGwJT+LQOwvB0UAALA8W8MYE7/1gG4RkAAAhCACwAss/17+dBlAYBLBAQgAAE4H8Chj0ZfjU96AOvUGQcgAAE4G8DhV0RvRufF1376qiABy9MtAxAAjn9PAMdfD70bmQFYBl0hNowPAAEAwK0AnHj9934PXgE4fiobRgiAAADgPgCWef617MXYL8svIAABCMCJAEY8EGgak07Zoua0aZQACEAA7gBgFARNIzIYwKEPrKfNPAABCMBZAE7zr30W+gAc99hm1tQDMPqRHwAB+Pqgp/j34ys0Pi0Zfg04a/IBCEAATlkS7w8ndiw6n27ETez7LV0P4MpSDLvjzzQApfeIw/17+u1LrgCnCghAACwYgOsAzOTfi+9/9pVlvYAFgAAEYFoAWzYYNBmvNvD8Vt3QyW3ZDgABCMCcAE44/R9OxdtNNL76RgICEIAAjAWwbXsBM/F+G2UnAZuWIgABCMBIAMtW/nX+jtvgDwNOEBCAAARgIICTrn2+T0TTRjp2YsklYAEgAAGYCMBZlz6j/Ov/KweD5rhOEhCAAARgGIDTrny+TEPrZspqAcOXIwABCMDTASwzARwk4KRLQAACEIBRAM477Uf5N+QP/Y0UMHo9AhCAAAwCsGljZfgFYM92OkdkxSVgASAAAbgngCGPQKYDWADo/DcAAMxx0peFAA4QEIAABOA1AJbhJ30BIAABCEAAtmynLBQw7FdiAAhAAN7yFhiAAAQgAAE4EcAKQOe/AQDgPABLUgDdA3T+GwAfhAZgiqthAAIQgJkBDPhbMAsArAB0/hsAAG54CTgYwPTvgAEIQAAeAWBJA+BOF4AABCAA4wDcTsABE1V3ugAEIAABGAjgxL+IP0TA/oka6p8/iApAAG4N4MR/E2mEgL0TNWySJ/kHQAACMBbAOg/AH+eivNncwN8kHjGo8WsRgAAEYCyAMwXsvQgc9wRlxKBOWIoABCAAgwFsc6SsIHDY7cMhYxp/IgIQgACMB7BJkuETEgrgyPmd5x8AAQjAGQDW4PN/kIFtez16evs/vgNAAAIwFYBJBHxhYOtLjRrRCfwBEIAAnARgwxkdNS+Rx16m+1crAAEIwPwAvj+nA2cmZOIHDugc/wAIQABOA/D15/GiZ2fsVoeO5xz/AAhAAE4EcL6ATyYo09vqzhuQAAQgABMD+PbUnjtHjd8/fjhn+QdAAAJwLoBLBByCxYyp7Pr4DQABCMD0ANY1AEYYGDWY844GgAAE4GQA353gKRbspBmc7h8AAQjA+QAuFbBbj+ixnHkxC0AAAnA+gK/O8iSTN20oZ76ZByAAAbgCwJoCwK+zuGAkp97LBCAAAbgEwBdnermiFf4BEIAAXAUgAZf7B0AAAnAZgAT840jn8gdAAAJwIYDPT3j+hfgHQAACcCWAFYBvDrMCEIAAPAnAVAIum6lnr5b/N/kAaAAcfxk7Gks/DHO4fwAEIABXA5hHwEVTtc4/AAIQgMsBTCPgmql69Eq1AhCAADwTwCwCrgRwiX8ABCAAEwD4ZUhmjdt1/gEQgABMAeAjAU8EcKl/AAQgAHMAmEHABTP14voXgCtGaIdhv/34kw1AiRiWKSDN/1n1/MgBCADHfzaAywWcDuBq/wAIQADmAXC1gLMB/P4aZ65EADp+ACYUcDKA6/0DIAABmAnAJxycAmAC/wAIQADmAnClgFMBzOAfAAEIwGQA1u/HecTHYJ4eLAAB4PhvAnCZgDOmKpd/AAQgANMB+GGAQl2aCeDTAwUgABz/dQCuEXAigF+2fvhKBKDjB2A+AecBmOT6D4AABGBOAFcIOA3ALNd/AAQgAJMC+N2HbQHM4x8AAQjArABOF3ASgIn8AyAAAZgWwNpISG4AM/kHQAACMC+AkwWcOVdJZhKAAARgXgDnCjhxrWaZSAACEICJAfxGxW4AJvMPgAAE4JYARggYP1fZ/AMgAAGYG8CJ14Dhc5XOPwACEIDZAZwmYPRc5fMPgAAEYHoAZwkYPFcfN3jVSgSg4wdgPgFj5yqjfwAEIAA3APCLGzsAmNI/AAIQgFsAOEPAyLnK6R8AAQjAPQD8YkdyAJP6B0AAAnATAONvBMbN1aeNXbgSAej4AZjuGjBurj5tqgIQAI4fgOsFDJurvP4BEIAA3AfAWAGj5iqxfwAEIAA3AjBUwJi5qpn9AyAAAbgTgJEChgKYdN4ACEAA7gTgF0rSAZjbPwACEICbARgmYMRcJfcPgAAE4G4ARgkYMFfZ/QMgAAG4HYBBAo6fq/T+ARCAANwPwBgBh89Vfv8ACEAAbghgiICD5+rTBi5fiQB0/ACMGMKu8R07WY+oBiAAHD8AhwtYlwO4xfUfAAEIwE0BHP82eORkbeIfAAEIwKMA7BBw4GTt4h8AAQjAXQEcLeC4ydrGPwACEIDbAjj4XfCwydri8QcAAQjA3QH8gswaADfyD4AABOBxADZ+HGbQZO3kHwABCMCdAZzxbyUd7B8AAQjAvQHMJWDdyz8AAhCAmwOYScDd/AMgAAG4O4B5BNzOPwACEIDbA5hFwP38AyAAAbg/gDkE3NA/AAIQgAcAOPTjMAGPf4uVCEAAAnDVNWBde/lXrEQAAhCA664Bq+s/AAIQgOcCuFTATa//AAhAAJ4C4EIBt/XvEACTtG7YHX+m4y/1MgH39Q+AAFgxAGcff6l3CbixfwAEIADPAbA2PaK42D8AAhCABwG4QMBnF58AdP4bAAAuFzDq+dum/gEQgAA8CsC5An7zzxWg898AADDFKR0w+Ltf/wEQgAA8DMB5Atb9/QMgAAF4GIC1Wayhl397fDwfgAAE4GEATrkIrEf4B0AAAvAiAIcJeIh/AAQgAM8DsHbIdZV/AAQgAA8EMFjAY/wDIAABeCKAkQK+eNoCQOe/AQBgslO7bx5O8g+AAATgmQBGCfjiEhOAzn8DAMDMAta7/QMgAAF4KoC1741s43dVADr/DQAAtxGwNszvKf4BEIAAPBfAwQK+2yoAnf8GAICJT/B3E/Lu3iIAnf8GAIC5T/A3E1IPvP4DIAABeDSA9fGUjaCyAtD6NwAAPE3Aeqp/AAQgAM8GsJZuAt9eJQLQ+W8AALifgHXIu2QAOv8NAAA3Oss/fG3De2kAOv8NAAA3FbB+/5/P8Q+AAATg+QDW/qkrAAQgAAG4J4C1c/bKof4BEIAAvAHAPgGP9Q+AAATgFQDW9gks5/oHQAACEICfZrCc7B8AAQjAOwCsLXM4eN0D0PlvAACY+2TvIxOAzn8DAMArzvZns56aSgACEIC3AFjnT3r260UAAhCAAAya8/xvmQEIQABeA2CdOuU73DQEIAABeA+ANYF/qQgEIAABeBGANYN/pQAQgAAE4Oan/NOX+dv/AkAAAhCAu57y7z/7kk9AAAIQgFcBWGdM9z++5l9fmU5AAAIQgHcBWGf698e3JBNwzRkAQAACcPOz/skL/PFS//r/AAhAAAJwz9P+0eZ//CdGUgkIQAAC8DoAa+xU//SO908T3QMEIAABuOV5/2jr9WcAKwABCEAAbnzi16cXgPVPCnNdAgIQgAC8EMA6HcCa8hIQgAAE4I0A1rh5Lp/UA6Dz3wAAcOdzv74H8N/fDEAAAhCAm577FYDdZwAAAQjATU/+LgArAAHo+CsAtz37aw+ANRuAA38376UAW62U4cdShg37+tXzz/9sOP7tx+AP9spW0zf+p9wP73Z/8u+MaZf0NwrPE/DNRn/99wpACYDbC/hqmwCUAHgdgH/+KtzP9wWtFAmAGwn4cpv/ALDm/BSMpKsBrAGP+X99/U+//eECUALgfgC+3+QPfwyhFgBKANxOwIZNfgLQOpEAuI+ALZv833/76WWsEwmA2wjYtsW/vpJlIgFwGwDbN8k/CYB7C9i1yT9fwiKRALiPgGM3aY1IANwHwLHbtEQkAO4j4NhtWiESAPcRcOg2rQ8JgDsJOHCrVocEwK0AHLZlS0MC4GYCmlBJAJSkUwH0zEISAAEo6ToAK/8kXQugT61IuhjA3wg0l5JuArD6RzskXQygJAFQkgAoSQCUJABKEgAlCYCSBEBJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSADVpSfyUYdGRy9PKFgAFQAmAAqCsMAAKgPpxtK0w6UAAy5Ae7Oyj72wahqGn6si9BeAVg3TlcgHgIADfHUzwWrt5VTuDxwNoHAE4dp1ELrHL17MTNxBAYwnAIcskbnldv5ydtMEAGk0Adi+TqMVlOQMwHkADCsDOVRK0ssbt576L/qTzde1NYgICMGqZhCyskbsJQAAiEIBRqyRiWQ3dTQACkIAAjFomAatq7D4CEIAEBGDUMhm/qAoAATgZQAICcOAzhq6xKAAE4HQACQjAcb70jMUUoQEIQAICMOoZAwABuB2ABARgyzIZvKDm3KQEIAABCEAAAhCABARgxzIZu54mfU4HgAAEIABjtzx+OX/7OgACEIAA3BfAzscbAATgty0TEIBDNz0FwGffUQEIwO9bBiAANwPw4fcAEICPtgzATQFMcafkt/0YubetG/r4ZblX+qdd6xjVsGNu3WwqAGvAil3xQ2zohl/v53saUgLYouVcAJ9+57hT7/VutO32t4FrHY2OKWl59NS8TwuvQzo+5f+X//ftedQ9ZpOePbaO/OvtJQKwvvmX2HIA+J/v7bnkXQDg990pozfbRn/H6TzhMewyAFs/HdY3lYNsfbOrDSPftFZSAfhcwHAAp7znnw7gkx0q4zfb8oDg/buC/ADWXgBbb4z3TmbHZLSfKC+HsHGt5AKwAjAQwGe7VCI2+/5DIh2wngpg03vTYatq4Ej27ObfvrB1c8kArAAMA/DhPo24JzNg0jtgPRTA1zdu2w568GT0Tc/TIWzfXDYAKwBjABz58aY6+MKjZ02/+lNBOwPYevNryE+jcYPZu5uD13E+ACsAIwAsMQCO2c7gnTsSwA/7vnZK+593RU7u183tBGCZCGA5C8ASs6wHbWjw3p0IYBkO4OSl0rzx4LUCwBsALCGretiWALgCwDIfwAEbPB/AmgPA0X9WYSWAJRGAJd7ntACWGABrglkd/cDsrxscvVYAWGdsaimAJQbAkgfAsgWAj59M7g3g+LuLkWsFgHXguZESwBID4MBtAbDzk0UJfq6F3lwE4CIA327vIgBHbmzwDuYEMORHS0oAx19ZBq6V0HufewA48Hd8MgJYQgAcurULAAy6tq7jBcx1w+TFmQ/A0EcXuwJY5gP47AvirlHTARhnRU4AS24AS24Ay3QA67BT5RoAO2/GnQnggoulv3/Pw81tcMfky4ECcO5y7tjkjLdVrw7t+RC0fnJoGIBt92rH3tIOALCGANh1IsZMRu8yjNq9rQCsUQDWAat2OwBbqXx3Q//Ro88ht/d2BLB54x++qffDriGT0fmVcbuXD8CSH8AnL5MEwIAf0vXl33bvBLDrU5vJAWzb+Mdv6n8KHTIZXXcLI3cvHYBlCYC1jCYwOYB9H1t6NyAd9wrfOL0fgE0b/7hLIz6GGDEZPcswdvcA2HP42wLY+WGNARf1HevkFABHPTT+9V01FsD2yehYhsG7lwzAAQ/65i7p5AAOuwHRtaPtAHadybkB7L0LHvbZnYDJaF+GNXr3cgE44gZnzSEgAF/s6Jj3iOdfAdaVAHZMRuuPgL6nOY9eOxGAr14h4odk+JO8LAA2DELfsTXOZj0bwNfvg0L2uucOQxiA9fVFUt0MwN5XiHmXMHAZJwaw907RmI0C8NXaCQOwxAPY9BCx92H2eQDOuE0Se+jTASzTAKwBAA4YqvQAlhHn+AwAe7Y64Wll8+4BMOhpMABffMvFAJZbAawA7Nl+GICj/omtvAB2nyXjJ/RmAMuAc7xrBwEIwP79BuBwAOslAJaxAHa//PjJiAewng9gnQlgjfnnSwEIwJBrsKHvXgCYEcA6G8Da+W9+AxCAQ3+6T3uENwfACsD0AHbdStkXwLoBgDUlgM1LaQiAoafW8AUzceRPALCuAvD5UewCYAXgGgBr1K9ad04KAONImf2gLAbAZ0cyH8CyBsACwLH/MHoJ+/h6DgALAMdfXM4G8MHR3AKgK8CekzoGwJIZQFeAU99c18gOANA9wKUANv/qbNh5BsDkANZEAPb9zdA9ACwA3AzAAsBzAex0aCKBAATgmG+9AcACwB7/VgJYAQjATAAWAJ4KYP870YkCAhCAY1YPAAHYftu3rhJwNoCtN5NW/D3AuYv6LgB7PzsBwJwAjnkWAUAAXglg+15PArAAsHS85DUA9i18AF4KYN0dwHIvgJ1bbt7VzQBsfhQT82+CFACuAbD7sxMTJqNtGd4H4JAtt+/pNQCG/KtwBYAAHArgi1+B2A/AmAexfQA+/96YN5+v1knZDsCSBMCyFsAyAcC6BYAPFgQAJ215xBqOAvDdrwLWLgFLj6tfDw6AlwLYsQwzANj+NnY/ADv+8GQYgD1/DOfdKJUuAL+/pwHg+Husve+AVwL4aBkCMB7AgAu1oZ/teXFvtWecSpCrH9/SzAewLASw3AngqwUz+gkcABu21n2Z9uidThtArx4kjfjKF662XV9PBvDzLAQC2HPa9O9JSQjg+5cH4Pgtl+5F1PAjr82g10/SywhVe65Ba+uoBgJYGp/+dwHYedp070lZCWD3D3cATgfw9829/AjPp69tughr/CjR929o2ezDr+45N0cA2DQLvUume9YGPLcafX8lEsDfpgOAswEMWMJPt5oAwNmbTQNg2M/MuQDW3pU1aTJGDRAAUwI46NRbtiMTXQXgDACf/zMuAARghDs1C4Arge/Z1hAA6xYA1ggAW6cjajIG7SMAR285yL9Fl4C5gO+5nJwHYFkMYOdwbAJgBSAAlwBYVx7g2nMOgJkmY8guAnDwlqP8WyRg0DHWsAUdDGCQgJH+HfdvgvTuaAVgbgB7Nh398zzwwrJ9szMBrNkBrPcAOOLv4wEw3VvgOhTAmH9HIOgY898DTA/giIfi2wBY+/cPgNmeAndueQ6AUQe56Iyvo/dxGYBxH4tMCWDNtnsAHPd8qm3DHXtT3+zPwqvcSWf82FmYAuCLjQ/Zn7ocwO4/kgzAkC3H+Nd67j197YhbRa//jHLU05Rx51yAgJH+Df1Tau9XTPRk1L4RAmDQliP4e7TZjjM24FZRbfg78gvO+OHnXJrPDtSR/5zzk7mdPhnPR2/CWgHg4HdzbzfbujO1AcCHf0wm6vpjwV+E7p2FQADfbrx7l56umAmT0fPZJABGbnm4ft+22rgrf/+ariNsXc+911gzzrk60r8ahl87gK1zu2QyHnoNwMkAdv50ernN1j359AUdx9e1nuvzPz24CMChfx86DL8eANvmdtFktK6XMAD18vKrb6OtO/JtN1uPr38995y7s865xlkIefITcnTf1kTrc9ao3R10fQzASQwaE+moc9wQSAKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKAmAhkASACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJABKEgAlCYCSBEBJAqAkAVCSAChJAJQkAEoSACUJgJIEQEkCoCQBUJIAKEkAlCQAShIAJQmAkgRASQKgJAFQkgAoSQCUJABKEgAlCYCSBEBJADQEkgAoSQCUJABKEgAlCYCSdFD/J8AAVqWREYv3ZkoAAAAASUVORK5CYII=" alt="IEEE EPI Logo" />
+    <div class="brand-text">
+      <strong>IEEE EPI SB</strong>
+      <span>Event Management</span>
+    </div>
+  </div>
+  <button class="add-btn" id="openAuth">
+    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+    </svg>
+    Add Event
+  </button>
+</header>
 
-      .btn-primary:hover {
-        opacity: 0.88;
-        transform: translateY(-1px);
-        box-shadow: 0 8px 28px rgba(79, 142, 247, 0.45);
-      }
+<!-- MAIN -->
+<main>
+  <div class="page-header">
+    <h1 class="page-title">Chapter <em>Events</em></h1>
+    <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
+  </div>
 
-      .btn-ghost {
-        background: transparent;
-        color: var(--text-dim);
-        border: 1px solid var(--border);
-        margin-top: 10px;
-      }
+  <div class="legend">
+    <div class="legend-item"><span class="legend-dot" style="background:#4f8ef7"></span>SB</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#22d49a"></span>IAS</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#b87fff"></span>WIE</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#ff5e5e"></span>RAS</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#22d4d4"></span>CIS</div>
+    <div class="legend-item"><span class="legend-dot" style="background:#ff9a3c"></span>CS</div>
+  </div>
 
-      .btn-ghost:hover {
-        border-color: var(--border-hover);
-        color: var(--text);
-        background: var(--surface-2);
-      }
-
-      .chapter-preview {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 8px;
-      }
-
-      .ch-badge {
-        font-size: 0.7rem;
-        font-weight: 700;
-        color: #fff;
-        border-radius: 4px;
-        padding: 3px 10px;
-        letter-spacing: 0.5px;
-      }
-
-      .ch-note {
-        font-size: 0.73rem;
-        color: var(--text-muted);
-      }
-
-      /* ---- RESPONSIVE ---- */
-      @media (max-width: 640px) {
-        header {
-          padding: 0 16px;
-        }
-        main {
-          padding: 20px 12px 60px;
-        }
-        .day-cell {
-          min-height: 60px;
-          padding: 4px 3px;
-        }
-        .day-num {
-          font-size: 0.7rem;
-          width: 20px;
-          height: 20px;
-        }
-        .chip {
-          font-size: 0.6rem;
-          padding: 1px 4px;
-        }
-        .month-label {
-          font-size: 1rem;
-        }
-      }
-
-      /* ---- CALENDAR LOAD ANIMATION ---- */
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(18px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .calendar-card {
-        animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .legend {
-        animation: fadeUp 0.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-
-      .page-header {
-        animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- HEADER -->
-    <header>
-      <div class="brand">
-        <img
-          class="brand-mark"
-          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABQAAAAMgCAMAAABLRj/JAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDkuMS1jMDAyIDc5LmE2YTYzOTY4YSwgMjAyNC8wMy8wNi0xMTo1MjowNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpjMzdmZTcwOS0wMDdmLWNiNDAtOTg2MC1mMDJiZTdkNzIxZDYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjlBRTkyQ0I3RDBDMTFFRkJBNUQ4QjNDMzlEREUxMjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjlBRTkyQ0E3RDBDMTFFRkJBNUQ4QjNDMzlEREUxMjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDI1LjkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NTY0ODczODktMzE3OC02YTQyLTgwYWYtMWIyZDcwZDU1MjBlIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOmMzN2ZlNzA5LTAwN2YtY2I0MC05ODYwLWYwMmJlN2Q3MjFkNiIv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"
-          alt="IEEE EPI Logo"
-        />
-        <div class="brand-text">
-          <strong>IEEE EPI SB</strong>
-          <span>Event Management</span>
-        </div>
-      </div>
-      <button class="add-btn" id="openAuth">
-        <svg
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2.5"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 4v16m8-8H4"
-          />
+  <div class="calendar-card">
+    <div class="calendar-nav">
+      <button class="nav-btn" id="prevMonth">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
         </svg>
-        Add Event
       </button>
-    </header>
-
-    <!-- MAIN -->
-    <main>
-      <div class="page-header">
-        <h1 class="page-title">Chapter <em>Events</em></h1>
-        <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
-      </div>
-
-      <div class="legend">
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #4f8ef7"></span>SB
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #22d49a"></span>IAS
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #b87fff"></span>WIE
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #ff5e5e"></span>RAS
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #22d4d4"></span>CIS
-        </div>
-        <div class="legend-item">
-          <span class="legend-dot" style="background: #ff9a3c"></span>CS
-        </div>
-      </div>
-
-      <div class="calendar-card">
-        <div class="calendar-nav">
-          <button class="nav-btn" id="prevMonth">
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <span class="month-label" id="monthLabel"></span>
-          <button class="nav-btn" id="nextMonth">
-            <svg
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              stroke-width="2.5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
-        <div class="cal-grid" id="calGrid"></div>
-      </div>
-    </main>
-
-    <!-- TOOLTIP -->
-    <div class="tooltip" id="tooltip"></div>
-
-    <!-- AUTH MODAL -->
-    <div class="overlay" id="authModal">
-      <div class="modal">
-        <div class="modal-head">
-          <div class="modal-head-left">
-            <div class="modal-icon">🔐</div>
-            <div class="modal-title">Access Verification</div>
-            <div class="modal-sub">Authorized IEEE members only</div>
-          </div>
-          <button class="close-btn" id="closeAuth">✕</button>
-        </div>
-        <div class="modal-body">
-          <p
-            style="
-              font-size: 0.85rem;
-              color: var(--text-dim);
-              margin-bottom: 18px;
-              line-height: 1.6;
-            "
-          >
-            Enter your authorized IEEE email address to access the event
-            creation form.
-          </p>
-          <div class="form-group">
-            <label for="authEmail">IEEE Email Address</label>
-            <input
-              type="email"
-              id="authEmail"
-              placeholder="yourname@ieee.org"
-            />
-          </div>
-          <div class="msg msg-error" id="authError">
-            ❌ You do not have permission to add events.
-          </div>
-          <button class="btn btn-primary" id="verifyBtn">
-            Verify Access →
-          </button>
-        </div>
-      </div>
+      <span class="month-label" id="monthLabel"></span>
+      <button class="nav-btn" id="nextMonth">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
     </div>
+    <div class="cal-grid" id="calGrid"></div>
+    <div class="mobile-agenda" id="mobileAgenda"></div>
+  </div>
+</main>
 
-    <!-- EVENT MODAL -->
-    <div class="overlay" id="eventModal">
-      <div class="modal">
-        <div class="modal-head">
-          <div class="modal-head-left">
-            <div class="modal-icon">📅</div>
-            <div class="modal-title">Create Event</div>
-            <div class="modal-sub">Add to the chapter calendar</div>
-          </div>
-          <button class="close-btn" id="closeEvent">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="evTitle">Event Title</label>
-            <input
-              type="text"
-              id="evTitle"
-              placeholder="e.g. General Meeting, Workshop…"
-            />
-          </div>
-          <div class="form-group">
-            <label for="evDate">Date</label>
-            <input type="date" id="evDate" />
-          </div>
-          <div class="form-group">
-            <label for="evChapter">Chapter</label>
-            <select id="evChapter">
-              <option value="SB">SB – Student Branch</option>
-              <option value="RAS">RAS – Robotics &amp; Automation</option>
-              <option value="WIE">WIE – Women in Engineering</option>
-              <option value="IAS">IAS – Industry Applications</option>
-              <option value="CIS">CIS – Computational Intelligence</option>
-              <option value="CS">CS – Computer Society</option>
-            </select>
-            <div class="chapter-preview" id="chPreview"></div>
-          </div>
-          <div class="msg msg-error" id="evError">
-            Please fill in all fields.
-          </div>
-          <div class="msg msg-success" id="evSuccess">
-            ✅ Event added successfully!
-          </div>
-          <button class="btn btn-primary" id="saveEvt">Add to Calendar</button>
-          <button class="btn btn-ghost" id="backBtn">← Back</button>
-        </div>
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"></div>
+
+<!-- AUTH MODAL -->
+<div class="overlay" id="authModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">🔐</div>
+        <div class="modal-title">Access Verification</div>
+        <div class="modal-sub">Authorized IEEE members only</div>
       </div>
+      <button class="close-btn" id="closeAuth">✕</button>
     </div>
-
-    <!-- DELETE CONFIRM MODAL -->
-    <div class="overlay" id="deleteModal">
-      <div class="modal">
-        <div class="modal-head">
-          <div class="modal-head-left">
-            <div class="modal-icon">🗑️</div>
-            <div class="modal-title">Delete Event</div>
-            <div class="modal-sub">This action cannot be undone</div>
-          </div>
-          <button class="close-btn" id="closeDelete">✕</button>
-        </div>
-        <div class="modal-body">
-          <p
-            style="
-              font-size: 0.88rem;
-              color: var(--text-dim);
-              margin-bottom: 22px;
-              line-height: 1.65;
-            "
-          >
-            Are you sure you want to delete
-            <span class="del-event-name" id="delEventName"></span>?
-          </p>
-          <button class="btn btn-danger" id="confirmDelete">
-            Delete Event
-          </button>
-          <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
-        </div>
+    <div class="modal-body">
+      <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:18px;line-height:1.6;">
+        Enter your authorized IEEE email address to access the event creation form.
+      </p>
+      <div class="form-group">
+        <label for="authEmail">IEEE Email Address</label>
+        <input type="email" id="authEmail" placeholder="yourname@ieee.org" />
       </div>
+      <div class="msg msg-error" id="authError">❌ You do not have permission to add events.</div>
+      <button class="btn btn-primary" id="verifyBtn">Verify Access →</button>
     </div>
+  </div>
+</div>
 
-    <script>
+<!-- EVENT MODAL -->
+<div class="overlay" id="eventModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">📅</div>
+        <div class="modal-title">Create Event</div>
+        <div class="modal-sub">Add to the chapter calendar</div>
+      </div>
+      <button class="close-btn" id="closeEvent">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="evTitle">Event Title</label>
+        <input type="text" id="evTitle" placeholder="e.g. General Meeting, Workshop…" />
+      </div>
+      <div class="form-group">
+        <label for="evDate">Date</label>
+        <input type="date" id="evDate" />
+      </div>
+      <div class="form-group">
+        <label for="evChapter">Chapter</label>
+        <select id="evChapter">
+          <option value="SB">SB – Student Branch</option>
+          <option value="RAS">RAS – Robotics &amp; Automation</option>
+          <option value="WIE">WIE – Women in Engineering</option>
+          <option value="IAS">IAS – Industry Applications</option>
+          <option value="CIS">CIS – Computational Intelligence</option>
+          <option value="CS">CS – Computer Society</option>
+        </select>
+        <div class="chapter-preview" id="chPreview"></div>
+      </div>
+      <div class="msg msg-error" id="evError">Please fill in all fields.</div>
+      <div class="msg msg-success" id="evSuccess">✅ Event added successfully!</div>
+      <button class="btn btn-primary" id="saveEvt">Add to Calendar</button>
+      <button class="btn btn-ghost" id="backBtn">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">🗑️</div>
+        <div class="modal-title">Delete Event</div>
+        <div class="modal-sub">This action cannot be undone</div>
+      </div>
+      <button class="close-btn" id="closeDelete">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.88rem;color:var(--text-dim);margin-bottom:22px;line-height:1.65;">
+        Are you sure you want to delete <span class="del-event-name" id="delEventName"></span>?
+      </p>
+      <button class="btn btn-danger" id="confirmDelete">Delete Event</button>
+      <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
       const ALLOWED = [
         "karim.thabet@ieee.org",
         "pass",
@@ -964,8 +964,8 @@
         "dhia.zrelli@ieee.org",
         "bahasboui2001@gmail.com",
       ];
-      let isAuthorized = false;
-      let pendingDeleteIndex = null;
+  let isAuthorized = false;
+  let pendingDeleteIndex = null;
 
       const COLORS = {
         SB: "#0b49b3",
@@ -976,303 +976,318 @@
         CS: "#fa880e",
       };
 
-      function today(delta = 0) {
-        const d = new Date();
-        d.setDate(d.getDate() + delta);
-        return d.toISOString().split("T")[0];
+  function today(delta = 0) {
+    const d = new Date();
+    d.setDate(d.getDate() + delta);
+    return d.toISOString().split('T')[0];
+  }
+
+  const TODAY = today();
+
+  let events = JSON.parse(localStorage.getItem('ieee_epi_events') || 'null') || [
+    { title: 'SB General Meeting',   date: today(0),  chapter: 'SB'  },
+    { title: 'RAS Workshop',          date: today(3),  chapter: 'RAS' },
+    { title: 'WIE Networking Event',  date: today(7),  chapter: 'WIE' },
+    { title: 'CIS Tech Talk',         date: today(-4), chapter: 'CIS' },
+    { title: 'CS Hackathon',          date: today(10), chapter: 'CS'  },
+    { title: 'IAS Industry Seminar',  date: today(14), chapter: 'IAS' },
+  ];
+
+  function saveEvents() { localStorage.setItem('ieee_epi_events', JSON.stringify(events)); }
+
+  /* Calendar */
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  let yr, mo;
+
+  function initCal() {
+    const now = new Date();
+    yr = now.getFullYear(); mo = now.getMonth();
+    renderCal();
+  }
+
+  function renderCal() {
+    document.getElementById('monthLabel').textContent = `${MONTHS[mo]} ${yr}`;
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+
+    DAYS.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'day-hdr';
+      el.textContent = d;
+      grid.appendChild(el);
+    });
+
+    const first = new Date(yr, mo, 1).getDay();
+    const dim   = new Date(yr, mo + 1, 0).getDate();
+    const prev  = new Date(yr, mo, 0).getDate();
+    const cells = [];
+
+    for (let i = first - 1; i >= 0; i--) cells.push({ d: prev - i, t: 'p' });
+    for (let d = 1; d <= dim; d++) cells.push({ d, t: 'c' });
+    let n = 1;
+    while (cells.length < 42) cells.push({ d: n++, t: 'x' });
+
+    cells.forEach(({ d, t }) => {
+      let dateStr;
+      if (t === 'c') {
+        dateStr = `${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      } else if (t === 'p') {
+        const m = mo === 0 ? 12 : mo;
+        const y = mo === 0 ? yr - 1 : yr;
+        dateStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      } else {
+        const m = mo === 11 ? 1 : mo + 2;
+        const y = mo === 11 ? yr + 1 : yr;
+        dateStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
       }
 
-      const TODAY = today();
+      const cell = document.createElement('div');
+      cell.className = 'day-cell' + (t !== 'c' ? ' other' : '') + (dateStr === TODAY ? ' today' : '');
 
-      let events = JSON.parse(
-        localStorage.getItem("ieee_epi_events") || "null",
-      ) || [
-        { title: "SB General Meeting", date: today(0), chapter: "SB" },
-        { title: "RAS Workshop", date: today(3), chapter: "RAS" },
-        { title: "WIE Networking Event", date: today(7), chapter: "WIE" },
-        { title: "CIS Tech Talk", date: today(-4), chapter: "CIS" },
-        { title: "CS Hackathon", date: today(10), chapter: "CS" },
-        { title: "IAS Industry Seminar", date: today(14), chapter: "IAS" },
-      ];
+      const num = document.createElement('div');
+      num.className = 'day-num';
+      num.textContent = d;
+      cell.appendChild(num);
 
-      function saveEvents() {
-        localStorage.setItem("ieee_epi_events", JSON.stringify(events));
-      }
+      events.filter(e => e.date === dateStr).forEach((ev, localIdx) => {
+        const globalIdx = events.indexOf(ev);
+        const chip = document.createElement('div');
+        chip.className = 'chip';
+        chip.style.background = COLORS[ev.chapter] || '#888';
 
-      /* Calendar */
-      const MONTHS = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ];
-      const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const label = document.createElement('span');
+        label.className = 'chip-label';
+        label.textContent = ev.title;
 
-      let yr, mo;
-
-      function initCal() {
-        const now = new Date();
-        yr = now.getFullYear();
-        mo = now.getMonth();
-        renderCal();
-      }
-
-      function renderCal() {
-        document.getElementById("monthLabel").textContent =
-          `${MONTHS[mo]} ${yr}`;
-        const grid = document.getElementById("calGrid");
-        grid.innerHTML = "";
-
-        DAYS.forEach((d) => {
-          const el = document.createElement("div");
-          el.className = "day-hdr";
-          el.textContent = d;
-          grid.appendChild(el);
+        const delBtn = document.createElement('button');
+        delBtn.className = 'chip-del';
+        delBtn.title = 'Delete event';
+        delBtn.innerHTML = '✕';
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openDeleteModal(globalIdx, ev.title);
         });
 
-        const first = new Date(yr, mo, 1).getDay();
-        const dim = new Date(yr, mo + 1, 0).getDate();
-        const prev = new Date(yr, mo, 0).getDate();
-        const cells = [];
+        chip.appendChild(label);
+        chip.appendChild(delBtn);
 
-        for (let i = first - 1; i >= 0; i--)
-          cells.push({ d: prev - i, t: "p" });
-        for (let d = 1; d <= dim; d++) cells.push({ d, t: "c" });
-        let n = 1;
-        while (cells.length < 42) cells.push({ d: n++, t: "x" });
+        // Tooltip only on label
+        chip.addEventListener('mouseenter', () => showTip(ev.title, ev.date, ev.chapter));
+        chip.addEventListener('mouseleave', hideTip);
+        chip.addEventListener('mousemove', moveTip);
 
-        cells.forEach(({ d, t }) => {
-          let dateStr;
-          if (t === "c") {
-            dateStr = `${yr}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-          } else if (t === "p") {
-            const m = mo === 0 ? 12 : mo;
-            const y = mo === 0 ? yr - 1 : yr;
-            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-          } else {
-            const m = mo === 11 ? 1 : mo + 2;
-            const y = mo === 11 ? yr + 1 : yr;
-            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-          }
-
-          const cell = document.createElement("div");
-          cell.className =
-            "day-cell" +
-            (t !== "c" ? " other" : "") +
-            (dateStr === TODAY ? " today" : "");
-
-          const num = document.createElement("div");
-          num.className = "day-num";
-          num.textContent = d;
-          cell.appendChild(num);
-
-          events
-            .filter((e) => e.date === dateStr)
-            .forEach((ev, localIdx) => {
-              const globalIdx = events.indexOf(ev);
-              const chip = document.createElement("div");
-              chip.className = "chip";
-              chip.style.background = COLORS[ev.chapter] || "#888";
-
-              const label = document.createElement("span");
-              label.className = "chip-label";
-              label.textContent = ev.title;
-
-              const delBtn = document.createElement("button");
-              delBtn.className = "chip-del";
-              delBtn.title = "Delete event";
-              delBtn.innerHTML = "✕";
-              delBtn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                openDeleteModal(globalIdx, ev.title);
-              });
-
-              chip.appendChild(label);
-              chip.appendChild(delBtn);
-
-              // Tooltip only on label
-              chip.addEventListener("mouseenter", () =>
-                showTip(ev.title, ev.date, ev.chapter),
-              );
-              chip.addEventListener("mouseleave", hideTip);
-              chip.addEventListener("mousemove", moveTip);
-
-              cell.appendChild(chip);
-            });
-
-          grid.appendChild(cell);
-        });
-      }
-
-      /* Tooltip */
-      const tip = document.getElementById("tooltip");
-      let _tipTitle = "",
-        _tipDate = "",
-        _tipChapter = "";
-      function showTip(title, date, chapter) {
-        tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
-        tip.classList.add("on");
-      }
-      function hideTip() {
-        tip.classList.remove("on");
-      }
-      function moveTip(e) {
-        tip.style.left = e.clientX + 14 + "px";
-        tip.style.top = e.clientY - 44 + "px";
-      }
-
-      /* Nav */
-      document.getElementById("prevMonth").addEventListener("click", () => {
-        if (--mo < 0) {
-          mo = 11;
-          yr--;
-        }
-        renderCal();
-      });
-      document.getElementById("nextMonth").addEventListener("click", () => {
-        if (++mo > 11) {
-          mo = 0;
-          yr++;
-        }
-        renderCal();
+        cell.appendChild(chip);
       });
 
-      /* Modals */
-      function open(id) {
-        document.getElementById(id).classList.add("open");
-      }
-      function close(id) {
-        document.getElementById(id).classList.remove("open");
-      }
+      grid.appendChild(cell);
+    });
 
-      document.querySelectorAll(".overlay").forEach((o) => {
-        o.addEventListener("click", (e) => {
-          if (e.target === o) close(o.id);
-        });
+    renderAgenda();
+  }
+
+  /* Mobile agenda view */
+  function renderAgenda() {
+    const container = document.getElementById('mobileAgenda');
+    container.innerHTML = '';
+
+    const dim = new Date(yr, mo + 1, 0).getDate();
+    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+    let hasAny = false;
+
+    for (let d = 1; d <= dim; d++) {
+      const dateStr = `${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dayEvents = events.filter(e => e.date === dateStr);
+      if (dayEvents.length === 0) continue;
+
+      hasAny = true;
+      const date = new Date(yr, mo, d);
+      const dayName = dayNames[date.getDay()];
+
+      const group = document.createElement('div');
+      group.className = 'agenda-day-group';
+
+      const hdr = document.createElement('div');
+      hdr.className = 'agenda-day-header';
+
+      const numEl = document.createElement('div');
+      numEl.className = 'agenda-day-num' + (dateStr === TODAY ? ' is-today' : '');
+      numEl.textContent = d;
+
+      const labelEl = document.createElement('div');
+      labelEl.className = 'agenda-day-label';
+      labelEl.textContent = dayName;
+
+      hdr.appendChild(numEl);
+      hdr.appendChild(labelEl);
+      group.appendChild(hdr);
+
+      const eventsEl = document.createElement('div');
+      eventsEl.className = 'agenda-events';
+
+      dayEvents.forEach(ev => {
+        const globalIdx = events.indexOf(ev);
+        const chip = document.createElement('div');
+        chip.className = 'agenda-chip';
+        chip.style.background = COLORS[ev.chapter] || '#888';
+
+        const info = document.createElement('div');
+        info.className = 'agenda-chip-info';
+
+        const title = document.createElement('div');
+        title.className = 'agenda-chip-title';
+        title.textContent = ev.title;
+
+        const meta = document.createElement('div');
+        meta.className = 'agenda-chip-meta';
+        meta.textContent = ev.chapter + ' Chapter';
+
+        info.appendChild(title);
+        info.appendChild(meta);
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'agenda-chip-del';
+        delBtn.innerHTML = '✕';
+        delBtn.title = 'Delete event';
+        delBtn.addEventListener('click', () => openDeleteModal(globalIdx, ev.title));
+
+        chip.appendChild(info);
+        chip.appendChild(delBtn);
+        eventsEl.appendChild(chip);
       });
 
-      /* Auth */
-      document.getElementById("openAuth").addEventListener("click", () => {
-        document.getElementById("authEmail").value = "";
-        document.getElementById("authError").classList.remove("show");
-        open("authModal");
-      });
-      document
-        .getElementById("closeAuth")
-        .addEventListener("click", () => close("authModal"));
+      group.appendChild(eventsEl);
+      container.appendChild(group);
+    }
 
-      document.getElementById("verifyBtn").addEventListener("click", () => {
-        const email = document
-          .getElementById("authEmail")
-          .value.trim()
-          .toLowerCase();
-        if (ALLOWED.includes(email)) {
-          document.getElementById("authError").classList.remove("show");
-          isAuthorized = true;
-          document.body.classList.add("can-delete");
-          close("authModal");
-          openEventModal();
-        } else {
-          document.getElementById("authError").classList.add("show");
-        }
-      });
+    if (!hasAny) {
+      container.innerHTML = '<div class="agenda-empty">No events this month</div>';
+    }
+  }
 
-      document.getElementById("authEmail").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") document.getElementById("verifyBtn").click();
-      });
+  /* Tooltip */
+  const tip = document.getElementById('tooltip');
+  let _tipTitle='', _tipDate='', _tipChapter='';
+  function showTip(title, date, chapter) {
+    tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
+    tip.classList.add('on');
+  }
+  function hideTip() { tip.classList.remove('on'); }
+  function moveTip(e) {
+    tip.style.left = (e.clientX + 14) + 'px';
+    tip.style.top  = (e.clientY - 44) + 'px';
+  }
 
-      /* Event modal */
-      function updatePreview() {
-        const ch = document.getElementById("evChapter").value;
-        const col = COLORS[ch] || "#888";
-        document.getElementById("chPreview").innerHTML =
-          `<span class="ch-badge" style="background:${col}">${ch}</span><span class="ch-note">Events will appear in this color</span>`;
-      }
+  /* Nav */
+  document.getElementById('prevMonth').addEventListener('click', () => {
+    if (--mo < 0) { mo = 11; yr--; }
+    renderCal();
+  });
+  document.getElementById('nextMonth').addEventListener('click', () => {
+    if (++mo > 11) { mo = 0; yr++; }
+    renderCal();
+  });
 
-      function openEventModal() {
-        document.getElementById("evDate").value = TODAY;
-        document.getElementById("evTitle").value = "";
-        document.getElementById("evChapter").value = "SB";
-        document.getElementById("evError").classList.remove("show");
-        document.getElementById("evSuccess").classList.remove("show");
-        updatePreview();
-        open("eventModal");
-      }
+  /* Modals */
+  function open(id)  { document.getElementById(id).classList.add('open'); }
+  function close(id) { document.getElementById(id).classList.remove('open'); }
 
-      document
-        .getElementById("evChapter")
-        .addEventListener("change", updatePreview);
-      document
-        .getElementById("closeEvent")
-        .addEventListener("click", () => close("eventModal"));
-      document.getElementById("backBtn").addEventListener("click", () => {
-        close("eventModal");
-        open("authModal");
-      });
+  document.querySelectorAll('.overlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) close(o.id); });
+  });
 
-      document.getElementById("saveEvt").addEventListener("click", () => {
-        const title = document.getElementById("evTitle").value.trim();
-        const date = document.getElementById("evDate").value;
-        const chapter = document.getElementById("evChapter").value;
-        const err = document.getElementById("evError");
-        const succ = document.getElementById("evSuccess");
+  /* Auth */
+  document.getElementById('openAuth').addEventListener('click', () => {
+    document.getElementById('authEmail').value = '';
+    document.getElementById('authError').classList.remove('show');
+    open('authModal');
+  });
+  document.getElementById('closeAuth').addEventListener('click', () => close('authModal'));
 
-        if (!title || !date || !chapter) {
-          err.classList.add("show");
-          succ.classList.remove("show");
-          return;
-        }
+  document.getElementById('verifyBtn').addEventListener('click', () => {
+    const email = document.getElementById('authEmail').value.trim().toLowerCase();
+    if (ALLOWED.includes(email)) {
+      document.getElementById('authError').classList.remove('show');
+      isAuthorized = true;
+      document.body.classList.add('can-delete');
+      close('authModal');
+      openEventModal();
+    } else {
+      document.getElementById('authError').classList.add('show');
+    }
+  });
 
-        err.classList.remove("show");
-        events.push({ title, date, chapter });
-        saveEvents();
+  document.getElementById('authEmail').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('verifyBtn').click();
+  });
 
-        const [y, m] = date.split("-").map(Number);
-        yr = y;
-        mo = m - 1;
-        renderCal();
+  /* Event modal */
+  function updatePreview() {
+    const ch = document.getElementById('evChapter').value;
+    const col = COLORS[ch] || '#888';
+    document.getElementById('chPreview').innerHTML =
+      `<span class="ch-badge" style="background:${col}">${ch}</span><span class="ch-note">Events will appear in this color</span>`;
+  }
 
-        succ.classList.add("show");
-        setTimeout(() => {
-          succ.classList.remove("show");
-          close("eventModal");
-        }, 1500);
-      });
+  function openEventModal() {
+    document.getElementById('evDate').value = TODAY;
+    document.getElementById('evTitle').value = '';
+    document.getElementById('evChapter').value = 'SB';
+    document.getElementById('evError').classList.remove('show');
+    document.getElementById('evSuccess').classList.remove('show');
+    updatePreview();
+    open('eventModal');
+  }
 
-      /* Delete modal */
-      function openDeleteModal(idx, title) {
-        pendingDeleteIndex = idx;
-        document.getElementById("delEventName").textContent = `"${title}"`;
-        open("deleteModal");
-      }
+  document.getElementById('evChapter').addEventListener('change', updatePreview);
+  document.getElementById('closeEvent').addEventListener('click', () => close('eventModal'));
+  document.getElementById('backBtn').addEventListener('click', () => { close('eventModal'); open('authModal'); });
 
-      document
-        .getElementById("closeDelete")
-        .addEventListener("click", () => close("deleteModal"));
-      document
-        .getElementById("cancelDelete")
-        .addEventListener("click", () => close("deleteModal"));
+  document.getElementById('saveEvt').addEventListener('click', () => {
+    const title   = document.getElementById('evTitle').value.trim();
+    const date    = document.getElementById('evDate').value;
+    const chapter = document.getElementById('evChapter').value;
+    const err  = document.getElementById('evError');
+    const succ = document.getElementById('evSuccess');
 
-      document.getElementById("confirmDelete").addEventListener("click", () => {
-        if (pendingDeleteIndex !== null) {
-          events.splice(pendingDeleteIndex, 1);
-          saveEvents();
-          pendingDeleteIndex = null;
-          renderCal();
-          close("deleteModal");
-        }
-      });
+    if (!title || !date || !chapter) { err.classList.add('show'); succ.classList.remove('show'); return; }
 
-      /* Init */
-      initCal();
-    </script>
-  </body>
+    err.classList.remove('show');
+    events.push({ title, date, chapter });
+    saveEvents();
+
+    const [y, m] = date.split('-').map(Number);
+    yr = y; mo = m - 1;
+    renderCal();
+
+    succ.classList.add('show');
+    setTimeout(() => { succ.classList.remove('show'); close('eventModal'); }, 1500);
+  });
+
+  /* Delete modal */
+  function openDeleteModal(idx, title) {
+    pendingDeleteIndex = idx;
+    document.getElementById('delEventName').textContent = `"${title}"`;
+    open('deleteModal');
+  }
+
+  document.getElementById('closeDelete').addEventListener('click', () => close('deleteModal'));
+  document.getElementById('cancelDelete').addEventListener('click', () => close('deleteModal'));
+
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (pendingDeleteIndex !== null) {
+      events.splice(pendingDeleteIndex, 1);
+      saveEvents();
+      pendingDeleteIndex = null;
+      renderCal();
+      close('deleteModal');
+    }
+  });
+
+  /* Init */
+  initCal();
+</script>
+</body>
 </html>
