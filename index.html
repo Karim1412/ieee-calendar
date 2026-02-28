@@ -307,22 +307,87 @@
 
     /* ---- EVENT CHIPS ---- */
     .chip {
-      display: block;
-      font-size: 0.67rem;
-      font-weight: 500;
-      border-radius: 4px;
-      padding: 2px 6px;
-      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 6px;
+      padding: 5px 7px;
+      margin-bottom: 4px;
       color: #fff;
+      cursor: default;
+      transition: opacity 0.12s, transform 0.12s;
+      letter-spacing: 0.1px;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 26px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+
+    .chip:hover { opacity: 0.9; }
+
+    .chip-label {
+      flex: 1;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      cursor: pointer;
-      transition: opacity 0.12s, transform 0.12s;
-      letter-spacing: 0.1px;
+      min-width: 0;
     }
 
-    .chip:hover { opacity: 0.78; transform: translateX(2px); }
+    .chip-del {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      border: none;
+      color: #fff;
+      font-size: 10px;
+      line-height: 1;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.14s, transform 0.14s;
+      padding: 0;
+      font-weight: 700;
+    }
+
+    .chip-del:hover {
+      background: rgba(255,80,80,0.7);
+      transform: scale(1.15);
+    }
+
+    body.can-delete .chip-del { display: flex; }
+
+    /* ---- DELETE CONFIRM MODAL ---- */
+    .del-event-name {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .btn-danger {
+      width: 100%;
+      padding: 12px;
+      background: #ff5e5e;
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      box-shadow: 0 4px 18px rgba(255,94,94,0.3);
+    }
+
+    .btn-danger:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255,94,94,0.45);
+    }
 
     /* ---- TOOLTIP ---- */
     .tooltip {
@@ -713,8 +778,31 @@
   </div>
 </div>
 
+<!-- DELETE CONFIRM MODAL -->
+<div class="overlay" id="deleteModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon">🗑️</div>
+        <div class="modal-title">Delete Event</div>
+        <div class="modal-sub">This action cannot be undone</div>
+      </div>
+      <button class="close-btn" id="closeDelete">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.88rem;color:var(--text-dim);margin-bottom:22px;line-height:1.65;">
+        Are you sure you want to delete <span class="del-event-name" id="delEventName"></span>?
+      </p>
+      <button class="btn btn-danger" id="confirmDelete">Delete Event</button>
+      <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
   const ALLOWED = ['karim.thabet@ieee.org'];
+  let isAuthorized = false;
+  let pendingDeleteIndex = null;
 
   const COLORS = {
     SB: '#4f8ef7', IAS: '#22d49a', WIE: '#b87fff',
@@ -796,17 +884,33 @@
       num.textContent = d;
       cell.appendChild(num);
 
-      events.filter(e => e.date === dateStr).forEach(ev => {
+      events.filter(e => e.date === dateStr).forEach((ev, localIdx) => {
+        const globalIdx = events.indexOf(ev);
         const chip = document.createElement('div');
         chip.className = 'chip';
         chip.style.background = COLORS[ev.chapter] || '#888';
-        chip.textContent = ev.title;
-        chip.dataset.title = ev.title;
-        chip.dataset.date = ev.date;
-        chip.dataset.chapter = ev.chapter;
-        chip.addEventListener('mouseenter', showTip);
+
+        const label = document.createElement('span');
+        label.className = 'chip-label';
+        label.textContent = ev.title;
+
+        const delBtn = document.createElement('button');
+        delBtn.className = 'chip-del';
+        delBtn.title = 'Delete event';
+        delBtn.innerHTML = '✕';
+        delBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openDeleteModal(globalIdx, ev.title);
+        });
+
+        chip.appendChild(label);
+        chip.appendChild(delBtn);
+
+        // Tooltip only on label
+        chip.addEventListener('mouseenter', () => showTip(ev.title, ev.date, ev.chapter));
         chip.addEventListener('mouseleave', hideTip);
         chip.addEventListener('mousemove', moveTip);
+
         cell.appendChild(chip);
       });
 
@@ -816,8 +920,8 @@
 
   /* Tooltip */
   const tip = document.getElementById('tooltip');
-  function showTip(e) {
-    const { title, date, chapter } = e.target.dataset;
+  let _tipTitle='', _tipDate='', _tipChapter='';
+  function showTip(title, date, chapter) {
     tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
     tip.classList.add('on');
   }
@@ -857,6 +961,8 @@
     const email = document.getElementById('authEmail').value.trim().toLowerCase();
     if (ALLOWED.includes(email)) {
       document.getElementById('authError').classList.remove('show');
+      isAuthorized = true;
+      document.body.classList.add('can-delete');
       close('authModal');
       openEventModal();
     } else {
@@ -909,6 +1015,26 @@
 
     succ.classList.add('show');
     setTimeout(() => { succ.classList.remove('show'); close('eventModal'); }, 1500);
+  });
+
+  /* Delete modal */
+  function openDeleteModal(idx, title) {
+    pendingDeleteIndex = idx;
+    document.getElementById('delEventName').textContent = `"${title}"`;
+    open('deleteModal');
+  }
+
+  document.getElementById('closeDelete').addEventListener('click', () => close('deleteModal'));
+  document.getElementById('cancelDelete').addEventListener('click', () => close('deleteModal'));
+
+  document.getElementById('confirmDelete').addEventListener('click', () => {
+    if (pendingDeleteIndex !== null) {
+      events.splice(pendingDeleteIndex, 1);
+      saveEvents();
+      pendingDeleteIndex = null;
+      renderCal();
+      close('deleteModal');
+    }
   });
 
   /* Init */
