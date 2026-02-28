@@ -1,1044 +1,1267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IEEE EPI SB – Events</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0a0d14;
-      --surface: #111520;
-      --surface-2: #181d2e;
-      --surface-3: #1f263d;
-      --border: rgba(255,255,255,0.07);
-      --border-hover: rgba(255,255,255,0.14);
-      --text: #e8ecf4;
-      --text-dim: rgba(232,236,244,0.5);
-      --text-muted: rgba(232,236,244,0.28);
-      --accent: #4f8ef7;
-      --accent-glow: rgba(79,142,247,0.25);
-
-      /* Chapter palette — vivid against dark bg */
-      --sb:  #4f8ef7;
-      --ias: #22d49a;
-      --wie: #b87fff;
-      --ras: #ff5e5e;
-      --cis: #22d4d4;
-      --cs:  #ff9a3c;
-
-      --radius: 16px;
-      --radius-sm: 10px;
-    }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ---- NOISE OVERLAY ---- */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ---- AMBIENT GLOW ---- */
-    body::after {
-      content: '';
-      position: fixed;
-      top: -200px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 900px;
-      height: 600px;
-      background: radial-gradient(ellipse at center, rgba(79,142,247,0.08) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* ---- HEADER ---- */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      padding: 0 40px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(10,13,20,0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      background: var(--accent);
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      font-family: 'Fraunces', serif;
-      font-weight: 800;
-      font-size: 11px;
-      color: #fff;
-      letter-spacing: 0.2px;
-      line-height: 1.2;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(79,142,247,0.4);
-    }
-
-    .brand-text strong {
-      display: block;
-      font-family: 'Fraunces', serif;
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--text);
-      letter-spacing: -0.2px;
-    }
-
-    .brand-text span {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-    }
-
-    .add-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 20px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 40px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      letter-spacing: 0.2px;
-      box-shadow: 0 4px 20px rgba(79,142,247,0.35);
-      transition: all 0.2s ease;
-    }
-
-    .add-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(79,142,247,0.5);
-    }
-
-    .add-btn svg { width: 15px; height: 15px; }
-
-    /* ---- MAIN ---- */
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 36px 24px 80px;
-    }
-
-    /* ---- PAGE TITLE ---- */
-    .page-header {
-      margin-bottom: 28px;
-    }
-
-    .page-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 300;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      color: var(--text);
-      letter-spacing: -1px;
-      line-height: 1.1;
-    }
-
-    .page-title em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .page-subtitle {
-      margin-top: 6px;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      font-weight: 400;
-    }
-
-    /* ---- LEGEND ---- */
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 40px;
-      padding: 5px 14px 5px 10px;
-      font-size: 0.76rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      transition: border-color 0.15s, color 0.15s;
-    }
-
-    .legend-item:hover {
-      border-color: var(--border-hover);
-      color: var(--text);
-    }
-
-    .legend-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* ---- CALENDAR CARD ---- */
-    .calendar-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .calendar-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-btn {
-      width: 34px; height: 34px;
-      border: 1px solid var(--border);
-      background: transparent;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-dim);
-      transition: all 0.18s;
-    }
-
-    .nav-btn:hover {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-      box-shadow: 0 0 16px rgba(79,142,247,0.3);
-    }
-
-    .nav-btn svg { width: 14px; height: 14px; }
-
-    .month-label {
-      font-family: 'Fraunces', serif;
-      font-weight: 600;
-      font-size: 1.2rem;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-
-    /* ---- GRID ---- */
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-    }
-
-    .day-hdr {
-      padding: 10px 4px 8px;
-      text-align: center;
-      font-size: 0.67rem;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .day-cell {
-      min-height: 96px;
-      padding: 8px 7px 6px;
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      vertical-align: top;
-      transition: background 0.15s;
-    }
-
-    .day-cell:nth-child(7n) { border-right: none; }
-
-    .day-cell.other { background: rgba(255,255,255,0.01); }
-    .day-cell.other .day-num { color: var(--text-muted); }
-
-    .day-cell.today .day-num {
-      background: var(--accent);
-      color: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 12px rgba(79,142,247,0.5);
-    }
-
-    .day-num {
-      width: 24px; height: 24px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      margin-bottom: 4px;
-    }
-
-    /* ---- EVENT CHIPS ---- */
-    .chip {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      border-radius: 6px;
-      padding: 5px 7px;
-      margin-bottom: 4px;
-      color: #fff;
-      cursor: default;
-      transition: opacity 0.12s, transform 0.12s;
-      letter-spacing: 0.1px;
-      width: 100%;
-      box-sizing: border-box;
-      min-height: 26px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
-
-    .chip:hover { opacity: 0.9; }
-
-    .chip-label {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 0;
-    }
-
-    .chip-del {
-      flex-shrink: 0;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.22);
-      border: none;
-      color: #fff;
-      font-size: 10px;
-      line-height: 1;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.14s, transform 0.14s;
-      padding: 0;
-      font-weight: 700;
-    }
-
-    .chip-del:hover {
-      background: rgba(255,80,80,0.7);
-      transform: scale(1.15);
-    }
-
-    body.can-delete .chip-del { display: flex; }
-
-    /* ---- DELETE CONFIRM MODAL ---- */
-    .del-event-name {
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .btn-danger {
-      width: 100%;
-      padding: 12px;
-      background: #ff5e5e;
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: all 0.18s;
-      box-shadow: 0 4px 18px rgba(255,94,94,0.3);
-    }
-
-    .btn-danger:hover {
-      opacity: 0.88;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 24px rgba(255,94,94,0.45);
-    }
-
-    /* ---- TOOLTIP ---- */
-    .tooltip {
-      position: fixed;
-      background: var(--surface-3);
-      border: 1px solid var(--border-hover);
-      color: var(--text);
-      padding: 9px 13px;
-      border-radius: var(--radius-sm);
-      font-size: 0.78rem;
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0;
-      transition: opacity 0.14s;
-      max-width: 200px;
-      line-height: 1.5;
-      backdrop-filter: blur(10px);
-    }
-
-    .tooltip.on { opacity: 1; }
-    .tooltip strong { color: var(--text); font-weight: 600; }
-    .tooltip small { color: var(--text-dim); }
-
-    /* ---- MODALS ---- */
-    .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.65);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 500;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.22s ease;
-      padding: 20px;
-    }
-
-    .overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border-hover);
-      border-radius: var(--radius);
-      width: 100%;
-      max-width: 440px;
-      overflow: hidden;
-      transform: translateY(24px) scale(0.97);
-      transition: transform 0.25s cubic-bezier(0.16,1,0.3,1);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-    }
-
-    .overlay.open .modal {
-      transform: translateY(0) scale(1);
-    }
-
-    .modal-head {
-      padding: 24px 28px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .modal-head-left {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .modal-icon {
-      font-size: 1.2rem;
-      line-height: 1;
-    }
-
-    .modal-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--text);
-      letter-spacing: -0.2px;
-    }
-
-    .modal-sub {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .close-btn {
-      width: 28px; height: 28px;
-      border: 1px solid var(--border);
-      background: transparent;
-      border-radius: 50%;
-      color: var(--text-dim);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
-      transition: all 0.15s;
-    }
-
-    .close-btn:hover {
-      background: var(--surface-3);
-      color: var(--text);
-    }
-
-    .modal-body { padding: 24px 28px; }
-
-    label {
-      display: block;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 7px;
-    }
-
-    .form-group { margin-bottom: 18px; }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="date"],
-    select {
-      width: 100%;
-      padding: 11px 14px;
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text);
-      outline: none;
-      transition: border-color 0.16s, box-shadow 0.16s;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
-    }
-
-    input::placeholder { color: var(--text-muted); }
-
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555e7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 36px;
-      cursor: pointer;
-    }
-
-    select option { background: #1f263d; }
-
-    .msg {
-      border-radius: var(--radius-sm);
-      padding: 10px 14px;
-      font-size: 0.83rem;
-      margin-bottom: 14px;
-      display: none;
-    }
-
-    .msg.show { display: block; }
-
-    .msg-error {
-      background: rgba(255,94,94,0.1);
-      border: 1px solid rgba(255,94,94,0.3);
-      color: #ff8080;
-    }
-
-    .msg-success {
-      background: rgba(34,212,154,0.1);
-      border: 1px solid rgba(34,212,154,0.3);
-      color: #22d49a;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 0.88rem;
-      cursor: pointer;
-      transition: all 0.18s;
-      letter-spacing: 0.2px;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(79,142,247,0.3);
-    }
-
-    .btn-primary:hover {
-      opacity: 0.88;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 28px rgba(79,142,247,0.45);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      margin-top: 10px;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--border-hover);
-      color: var(--text);
-      background: var(--surface-2);
-    }
-
-    .chapter-preview {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .ch-badge {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #fff;
-      border-radius: 4px;
-      padding: 3px 10px;
-      letter-spacing: 0.5px;
-    }
-
-    .ch-note {
-      font-size: 0.73rem;
-      color: var(--text-muted);
-    }
-
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 640px) {
-      header { padding: 0 16px; }
-      main { padding: 20px 12px 60px; }
-      .day-cell { min-height: 60px; padding: 4px 3px; }
-      .day-num { font-size: 0.7rem; width: 20px; height: 20px; }
-      .chip { font-size: 0.6rem; padding: 1px 4px; }
-      .month-label { font-size: 1rem; }
-    }
-
-    /* ---- CALENDAR LOAD ANIMATION ---- */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .calendar-card {
-      animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
-    }
-
-    .legend {
-      animation: fadeUp 0.4s 0.1s cubic-bezier(0.16,1,0.3,1) both;
-    }
-
-    .page-header {
-      animation: fadeUp 0.4s cubic-bezier(0.16,1,0.3,1) both;
-    }
-  </style>
-</head>
-<body>
-
-<!-- HEADER -->
-<header>
-  <div class="brand">
-    <div class="brand-mark">IEEE<br>EPI</div>
-    <div class="brand-text">
-      <strong>IEEE EPI SB</strong>
-      <span>Event Management</span>
-    </div>
-  </div>
-  <button class="add-btn" id="openAuth">
-    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-    </svg>
-    Add Event
-  </button>
-</header>
-
-<!-- MAIN -->
-<main>
-  <div class="page-header">
-    <h1 class="page-title">Chapter <em>Events</em></h1>
-    <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
-  </div>
-
-  <div class="legend">
-    <div class="legend-item"><span class="legend-dot" style="background:#4f8ef7"></span>SB</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#22d49a"></span>IAS</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#b87fff"></span>WIE</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#ff5e5e"></span>RAS</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#22d4d4"></span>CIS</div>
-    <div class="legend-item"><span class="legend-dot" style="background:#ff9a3c"></span>CS</div>
-  </div>
-
-  <div class="calendar-card">
-    <div class="calendar-nav">
-      <button class="nav-btn" id="prevMonth">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
-        </svg>
-      </button>
-      <span class="month-label" id="monthLabel"></span>
-      <button class="nav-btn" id="nextMonth">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-        </svg>
-      </button>
-    </div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
-</main>
-
-<!-- TOOLTIP -->
-<div class="tooltip" id="tooltip"></div>
-
-<!-- AUTH MODAL -->
-<div class="overlay" id="authModal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-head-left">
-        <div class="modal-icon">🔐</div>
-        <div class="modal-title">Access Verification</div>
-        <div class="modal-sub">Authorized IEEE members only</div>
-      </div>
-      <button class="close-btn" id="closeAuth">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:18px;line-height:1.6;">
-        Enter your authorized IEEE email address to access the event creation form.
-      </p>
-      <div class="form-group">
-        <label for="authEmail">IEEE Email Address</label>
-        <input type="email" id="authEmail" placeholder="yourname@ieee.org" />
-      </div>
-      <div class="msg msg-error" id="authError">❌ You do not have permission to add events.</div>
-      <button class="btn btn-primary" id="verifyBtn">Verify Access →</button>
-    </div>
-  </div>
-</div>
-
-<!-- EVENT MODAL -->
-<div class="overlay" id="eventModal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-head-left">
-        <div class="modal-icon">📅</div>
-        <div class="modal-title">Create Event</div>
-        <div class="modal-sub">Add to the chapter calendar</div>
-      </div>
-      <button class="close-btn" id="closeEvent">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label for="evTitle">Event Title</label>
-        <input type="text" id="evTitle" placeholder="e.g. General Meeting, Workshop…" />
-      </div>
-      <div class="form-group">
-        <label for="evDate">Date</label>
-        <input type="date" id="evDate" />
-      </div>
-      <div class="form-group">
-        <label for="evChapter">Chapter</label>
-        <select id="evChapter">
-          <option value="SB">SB – Student Branch</option>
-          <option value="RAS">RAS – Robotics &amp; Automation</option>
-          <option value="WIE">WIE – Women in Engineering</option>
-          <option value="IAS">IAS – Industry Applications</option>
-          <option value="CIS">CIS – Computational Intelligence</option>
-          <option value="CS">CS – Computer Society</option>
-        </select>
-        <div class="chapter-preview" id="chPreview"></div>
-      </div>
-      <div class="msg msg-error" id="evError">Please fill in all fields.</div>
-      <div class="msg msg-success" id="evSuccess">✅ Event added successfully!</div>
-      <button class="btn btn-primary" id="saveEvt">Add to Calendar</button>
-      <button class="btn btn-ghost" id="backBtn">← Back</button>
-    </div>
-  </div>
-</div>
-
-<!-- DELETE CONFIRM MODAL -->
-<div class="overlay" id="deleteModal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-head-left">
-        <div class="modal-icon">🗑️</div>
-        <div class="modal-title">Delete Event</div>
-        <div class="modal-sub">This action cannot be undone</div>
-      </div>
-      <button class="close-btn" id="closeDelete">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:0.88rem;color:var(--text-dim);margin-bottom:22px;line-height:1.65;">
-        Are you sure you want to delete <span class="del-event-name" id="delEventName"></span>?
-      </p>
-      <button class="btn btn-danger" id="confirmDelete">Delete Event</button>
-      <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  const ALLOWED = ['karim.thabet@ieee.org'];
-  let isAuthorized = false;
-  let pendingDeleteIndex = null;
-
-  const COLORS = {
-    SB: '#4f8ef7', IAS: '#22d49a', WIE: '#b87fff',
-    RAS: '#ff5e5e', CIS: '#22d4d4', CS: '#ff9a3c'
-  };
-
-  function today(delta = 0) {
-    const d = new Date();
-    d.setDate(d.getDate() + delta);
-    return d.toISOString().split('T')[0];
-  }
-
-  const TODAY = today();
-
-  let events = JSON.parse(localStorage.getItem('ieee_epi_events') || 'null') || [
-    { title: 'SB General Meeting',   date: today(0),  chapter: 'SB'  },
-    { title: 'RAS Workshop',          date: today(3),  chapter: 'RAS' },
-    { title: 'WIE Networking Event',  date: today(7),  chapter: 'WIE' },
-    { title: 'CIS Tech Talk',         date: today(-4), chapter: 'CIS' },
-    { title: 'CS Hackathon',          date: today(10), chapter: 'CS'  },
-    { title: 'IAS Industry Seminar',  date: today(14), chapter: 'IAS' },
-  ];
-
-  function saveEvents() { localStorage.setItem('ieee_epi_events', JSON.stringify(events)); }
-
-  /* Calendar */
-  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
-  let yr, mo;
-
-  function initCal() {
-    const now = new Date();
-    yr = now.getFullYear(); mo = now.getMonth();
-    renderCal();
-  }
-
-  function renderCal() {
-    document.getElementById('monthLabel').textContent = `${MONTHS[mo]} ${yr}`;
-    const grid = document.getElementById('calGrid');
-    grid.innerHTML = '';
-
-    DAYS.forEach(d => {
-      const el = document.createElement('div');
-      el.className = 'day-hdr';
-      el.textContent = d;
-      grid.appendChild(el);
-    });
-
-    const first = new Date(yr, mo, 1).getDay();
-    const dim   = new Date(yr, mo + 1, 0).getDate();
-    const prev  = new Date(yr, mo, 0).getDate();
-    const cells = [];
-
-    for (let i = first - 1; i >= 0; i--) cells.push({ d: prev - i, t: 'p' });
-    for (let d = 1; d <= dim; d++) cells.push({ d, t: 'c' });
-    let n = 1;
-    while (cells.length < 42) cells.push({ d: n++, t: 'x' });
-
-    cells.forEach(({ d, t }) => {
-      let dateStr;
-      if (t === 'c') {
-        dateStr = `${yr}-${String(mo+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      } else if (t === 'p') {
-        const m = mo === 0 ? 12 : mo;
-        const y = mo === 0 ? yr - 1 : yr;
-        dateStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-      } else {
-        const m = mo === 11 ? 1 : mo + 2;
-        const y = mo === 11 ? yr + 1 : yr;
-        dateStr = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IEEE EPI SB – Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
-      const cell = document.createElement('div');
-      cell.className = 'day-cell' + (t !== 'c' ? ' other' : '') + (dateStr === TODAY ? ' today' : '');
+      :root {
+        --bg: #0a0d14;
+        --surface: #111520;
+        --surface-2: #181d2e;
+        --surface-3: #1f263d;
+        --border: rgba(255, 255, 255, 0.07);
+        --border-hover: rgba(255, 255, 255, 0.14);
+        --text: #e8ecf4;
+        --text-dim: rgba(232, 236, 244, 0.5);
+        --text-muted: rgba(232, 236, 244, 0.28);
+        --accent: #4f8ef7;
+        --accent-glow: rgba(79, 142, 247, 0.25);
 
-      const num = document.createElement('div');
-      num.className = 'day-num';
-      num.textContent = d;
-      cell.appendChild(num);
+        /* Chapter palette — vivid against dark bg */
+        --sb: #0b49b3;
+        --ias: #045514;
+        --wie: #a50ab0;
+        --ras: #b9184e;
+        --cis: #2577e3;
+        --cs: #fa880e;
 
-      events.filter(e => e.date === dateStr).forEach((ev, localIdx) => {
-        const globalIdx = events.indexOf(ev);
-        const chip = document.createElement('div');
-        chip.className = 'chip';
-        chip.style.background = COLORS[ev.chapter] || '#888';
+        --radius: 16px;
+        --radius-sm: 10px;
+      }
 
-        const label = document.createElement('span');
-        label.className = 'chip-label';
-        label.textContent = ev.title;
+      body {
+        font-family: "Space Grotesk", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
 
-        const delBtn = document.createElement('button');
-        delBtn.className = 'chip-del';
-        delBtn.title = 'Delete event';
-        delBtn.innerHTML = '✕';
-        delBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          openDeleteModal(globalIdx, ev.title);
+      /* ---- NOISE OVERLAY ---- */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ---- AMBIENT GLOW ---- */
+      body::after {
+        content: "";
+        position: fixed;
+        top: -200px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        height: 600px;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(79, 142, 247, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ---- HEADER ---- */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        padding: 0 40px;
+        height: 68px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(10, 13, 20, 0.8);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        background: var(--accent);
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        font-family: "Fraunces", serif;
+        font-weight: 800;
+        font-size: 11px;
+        color: #fff;
+        letter-spacing: 0.2px;
+        line-height: 1.2;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(79, 142, 247, 0.4);
+      }
+
+      .brand-text strong {
+        display: block;
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text);
+        letter-spacing: -0.2px;
+      }
+
+      .brand-text span {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+      }
+
+      .add-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 20px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 40px;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        letter-spacing: 0.2px;
+        box-shadow: 0 4px 20px rgba(79, 142, 247, 0.35);
+        transition: all 0.2s ease;
+      }
+
+      .add-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(79, 142, 247, 0.5);
+      }
+
+      .add-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+
+      /* ---- MAIN ---- */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 36px 24px 80px;
+      }
+
+      /* ---- PAGE TITLE ---- */
+      .page-header {
+        margin-bottom: 28px;
+      }
+
+      .page-title {
+        font-family: "Fraunces", serif;
+        font-weight: 300;
+        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        color: var(--text);
+        letter-spacing: -1px;
+        line-height: 1.1;
+      }
+
+      .page-title em {
+        font-style: italic;
+        color: var(--accent);
+      }
+
+      .page-subtitle {
+        margin-top: 6px;
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        font-weight: 400;
+      }
+
+      /* ---- LEGEND ---- */
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 40px;
+        padding: 5px 14px 5px 10px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        color: var(--text-dim);
+        transition:
+          border-color 0.15s,
+          color 0.15s;
+      }
+
+      .legend-item:hover {
+        border-color: var(--border-hover);
+        color: var(--text);
+      }
+
+      .legend-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      /* ---- CALENDAR CARD ---- */
+      .calendar-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .calendar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-btn {
+        width: 34px;
+        height: 34px;
+        border: 1px solid var(--border);
+        background: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-dim);
+        transition: all 0.18s;
+      }
+
+      .nav-btn:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+        box-shadow: 0 0 16px rgba(79, 142, 247, 0.3);
+      }
+
+      .nav-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      .month-label {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1.2rem;
+        color: var(--text);
+        letter-spacing: -0.3px;
+      }
+
+      /* ---- GRID ---- */
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
+
+      .day-hdr {
+        padding: 10px 4px 8px;
+        text-align: center;
+        font-size: 0.67rem;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .day-cell {
+        min-height: 96px;
+        padding: 8px 7px 6px;
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+        transition: background 0.15s;
+      }
+
+      .day-cell:nth-child(7n) {
+        border-right: none;
+      }
+
+      .day-cell.other {
+        background: rgba(255, 255, 255, 0.01);
+      }
+      .day-cell.other .day-num {
+        color: var(--text-muted);
+      }
+
+      .day-cell.today .day-num {
+        background: var(--accent);
+        color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba(79, 142, 247, 0.5);
+      }
+
+      .day-num {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        margin-bottom: 4px;
+      }
+
+      /* ---- EVENT CHIPS ---- */
+      .chip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 5px 7px;
+        margin-bottom: 4px;
+        color: #fff;
+        cursor: default;
+        transition:
+          opacity 0.12s,
+          transform 0.12s;
+        letter-spacing: 0.1px;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 26px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      }
+
+      .chip:hover {
+        opacity: 0.9;
+      }
+
+      .chip-label {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .chip-del {
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.22);
+        border: none;
+        color: #fff;
+        font-size: 10px;
+        line-height: 1;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.14s,
+          transform 0.14s;
+        padding: 0;
+        font-weight: 700;
+      }
+
+      .chip-del:hover {
+        background: rgba(255, 80, 80, 0.7);
+        transform: scale(1.15);
+      }
+
+      body.can-delete .chip-del {
+        display: flex;
+      }
+
+      /* ---- DELETE CONFIRM MODAL ---- */
+      .del-event-name {
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .btn-danger {
+        width: 100%;
+        padding: 12px;
+        background: #ff5e5e;
+        color: #fff;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.18s;
+        box-shadow: 0 4px 18px rgba(255, 94, 94, 0.3);
+      }
+
+      .btn-danger:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 24px rgba(255, 94, 94, 0.45);
+      }
+
+      /* ---- TOOLTIP ---- */
+      .tooltip {
+        position: fixed;
+        background: var(--surface-3);
+        border: 1px solid var(--border-hover);
+        color: var(--text);
+        padding: 9px 13px;
+        border-radius: var(--radius-sm);
+        font-size: 0.78rem;
+        pointer-events: none;
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.14s;
+        max-width: 200px;
+        line-height: 1.5;
+        backdrop-filter: blur(10px);
+      }
+
+      .tooltip.on {
+        opacity: 1;
+      }
+      .tooltip strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .tooltip small {
+        color: var(--text-dim);
+      }
+
+      /* ---- MODALS ---- */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 500;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.22s ease;
+        padding: 20px;
+      }
+
+      .overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .modal {
+        background: var(--surface);
+        border: 1px solid var(--border-hover);
+        border-radius: var(--radius);
+        width: 100%;
+        max-width: 440px;
+        overflow: hidden;
+        transform: translateY(24px) scale(0.97);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+      }
+
+      .overlay.open .modal {
+        transform: translateY(0) scale(1);
+      }
+
+      .modal-head {
+        padding: 24px 28px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .modal-head-left {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .modal-icon {
+        font-size: 1.2rem;
+        line-height: 1;
+      }
+
+      .modal-title {
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: var(--text);
+        letter-spacing: -0.2px;
+      }
+
+      .modal-sub {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+
+      .close-btn {
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--border);
+        background: transparent;
+        border-radius: 50%;
+        color: var(--text-dim);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        transition: all 0.15s;
+      }
+
+      .close-btn:hover {
+        background: var(--surface-3);
+        color: var(--text);
+      }
+
+      .modal-body {
+        padding: 24px 28px;
+      }
+
+      label {
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 7px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="date"],
+      select {
+        width: 100%;
+        padding: 11px 14px;
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.9rem;
+        color: var(--text);
+        outline: none;
+        transition:
+          border-color 0.16s,
+          box-shadow 0.16s;
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
+      }
+
+      input::placeholder {
+        color: var(--text-muted);
+      }
+
+      select {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555e7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+
+      select option {
+        background: #1f263d;
+      }
+
+      .msg {
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        font-size: 0.83rem;
+        margin-bottom: 14px;
+        display: none;
+      }
+
+      .msg.show {
+        display: block;
+      }
+
+      .msg-error {
+        background: rgba(255, 94, 94, 0.1);
+        border: 1px solid rgba(255, 94, 94, 0.3);
+        color: #ff8080;
+      }
+
+      .msg-success {
+        background: rgba(34, 212, 154, 0.1);
+        border: 1px solid rgba(34, 212, 154, 0.3);
+        color: #22d49a;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: all 0.18s;
+        letter-spacing: 0.2px;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 4px 18px rgba(79, 142, 247, 0.3);
+      }
+
+      .btn-primary:hover {
+        opacity: 0.88;
+        transform: translateY(-1px);
+        box-shadow: 0 8px 28px rgba(79, 142, 247, 0.45);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--text-dim);
+        border: 1px solid var(--border);
+        margin-top: 10px;
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--border-hover);
+        color: var(--text);
+        background: var(--surface-2);
+      }
+
+      .chapter-preview {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .ch-badge {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #fff;
+        border-radius: 4px;
+        padding: 3px 10px;
+        letter-spacing: 0.5px;
+      }
+
+      .ch-note {
+        font-size: 0.73rem;
+        color: var(--text-muted);
+      }
+
+      /* ---- RESPONSIVE ---- */
+      @media (max-width: 640px) {
+        header {
+          padding: 0 16px;
+        }
+        main {
+          padding: 20px 12px 60px;
+        }
+        .day-cell {
+          min-height: 60px;
+          padding: 4px 3px;
+        }
+        .day-num {
+          font-size: 0.7rem;
+          width: 20px;
+          height: 20px;
+        }
+        .chip {
+          font-size: 0.6rem;
+          padding: 1px 4px;
+        }
+        .month-label {
+          font-size: 1rem;
+        }
+      }
+
+      /* ---- CALENDAR LOAD ANIMATION ---- */
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .calendar-card {
+        animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      .legend {
+        animation: fadeUp 0.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      .page-header {
+        animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="brand-mark">IEEE<br />EPI</div>
+        <div class="brand-text">
+          <strong>IEEE EPI SB</strong>
+          <span>Event Management</span>
+        </div>
+      </div>
+      <button class="add-btn" id="openAuth">
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 4v16m8-8H4"
+          />
+        </svg>
+        Add Event
+      </button>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+      <div class="page-header">
+        <h1 class="page-title">Chapter <em>Events</em></h1>
+        <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #4f8ef7"></span>SB
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #22d49a"></span>IAS
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #b87fff"></span>WIE
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #ff5e5e"></span>RAS
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #22d4d4"></span>CIS
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background: #ff9a3c"></span>CS
+        </div>
+      </div>
+
+      <div class="calendar-card">
+        <div class="calendar-nav">
+          <button class="nav-btn" id="prevMonth">
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </button>
+          <span class="month-label" id="monthLabel"></span>
+          <button class="nav-btn" id="nextMonth">
+            <svg
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+    </main>
+
+    <!-- TOOLTIP -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- AUTH MODAL -->
+    <div class="overlay" id="authModal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-head-left">
+            <div class="modal-icon">🔐</div>
+            <div class="modal-title">Access Verification</div>
+            <div class="modal-sub">Authorized IEEE members only</div>
+          </div>
+          <button class="close-btn" id="closeAuth">✕</button>
+        </div>
+        <div class="modal-body">
+          <p
+            style="
+              font-size: 0.85rem;
+              color: var(--text-dim);
+              margin-bottom: 18px;
+              line-height: 1.6;
+            "
+          >
+            Enter your authorized IEEE email address to access the event
+            creation form.
+          </p>
+          <div class="form-group">
+            <label for="authEmail">IEEE Email Address</label>
+            <input
+              type="email"
+              id="authEmail"
+              placeholder="yourname@ieee.org"
+            />
+          </div>
+          <div class="msg msg-error" id="authError">
+            ❌ You do not have permission to add events.
+          </div>
+          <button class="btn btn-primary" id="verifyBtn">
+            Verify Access →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENT MODAL -->
+    <div class="overlay" id="eventModal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-head-left">
+            <div class="modal-icon">📅</div>
+            <div class="modal-title">Create Event</div>
+            <div class="modal-sub">Add to the chapter calendar</div>
+          </div>
+          <button class="close-btn" id="closeEvent">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="evTitle">Event Title</label>
+            <input
+              type="text"
+              id="evTitle"
+              placeholder="e.g. General Meeting, Workshop…"
+            />
+          </div>
+          <div class="form-group">
+            <label for="evDate">Date</label>
+            <input type="date" id="evDate" />
+          </div>
+          <div class="form-group">
+            <label for="evChapter">Chapter</label>
+            <select id="evChapter">
+              <option value="SB">SB – Student Branch</option>
+              <option value="RAS">RAS – Robotics &amp; Automation</option>
+              <option value="WIE">WIE – Women in Engineering</option>
+              <option value="IAS">IAS – Industry Applications</option>
+              <option value="CIS">CIS – Computational Intelligence</option>
+              <option value="CS">CS – Computer Society</option>
+            </select>
+            <div class="chapter-preview" id="chPreview"></div>
+          </div>
+          <div class="msg msg-error" id="evError">
+            Please fill in all fields.
+          </div>
+          <div class="msg msg-success" id="evSuccess">
+            ✅ Event added successfully!
+          </div>
+          <button class="btn btn-primary" id="saveEvt">Add to Calendar</button>
+          <button class="btn btn-ghost" id="backBtn">← Back</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- DELETE CONFIRM MODAL -->
+    <div class="overlay" id="deleteModal">
+      <div class="modal">
+        <div class="modal-head">
+          <div class="modal-head-left">
+            <div class="modal-icon">🗑️</div>
+            <div class="modal-title">Delete Event</div>
+            <div class="modal-sub">This action cannot be undone</div>
+          </div>
+          <button class="close-btn" id="closeDelete">✕</button>
+        </div>
+        <div class="modal-body">
+          <p
+            style="
+              font-size: 0.88rem;
+              color: var(--text-dim);
+              margin-bottom: 22px;
+              line-height: 1.65;
+            "
+          >
+            Are you sure you want to delete
+            <span class="del-event-name" id="delEventName"></span>?
+          </p>
+          <button class="btn btn-danger" id="confirmDelete">
+            Delete Event
+          </button>
+          <button class="btn btn-ghost" id="cancelDelete">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ALLOWED = ["karim.thabet@ieee.org"];
+      let isAuthorized = false;
+      let pendingDeleteIndex = null;
+
+      const COLORS = {
+        SB: "#4f8ef7",
+        IAS: "#22d49a",
+        WIE: "#b87fff",
+        RAS: "#ff5e5e",
+        CIS: "#22d4d4",
+        CS: "#ff9a3c",
+      };
+
+      function today(delta = 0) {
+        const d = new Date();
+        d.setDate(d.getDate() + delta);
+        return d.toISOString().split("T")[0];
+      }
+
+      const TODAY = today();
+
+      let events = JSON.parse(
+        localStorage.getItem("ieee_epi_events") || "null",
+      ) || [{ title: "WIE Networking Event", date: today(7), chapter: "WIE" }];
+
+      function saveEvents() {
+        localStorage.setItem("ieee_epi_events", JSON.stringify(events));
+      }
+
+      /* Calendar */
+      const MONTHS = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+      let yr, mo;
+
+      function initCal() {
+        const now = new Date();
+        yr = now.getFullYear();
+        mo = now.getMonth();
+        renderCal();
+      }
+
+      function renderCal() {
+        document.getElementById("monthLabel").textContent =
+          `${MONTHS[mo]} ${yr}`;
+        const grid = document.getElementById("calGrid");
+        grid.innerHTML = "";
+
+        DAYS.forEach((d) => {
+          const el = document.createElement("div");
+          el.className = "day-hdr";
+          el.textContent = d;
+          grid.appendChild(el);
         });
 
-        chip.appendChild(label);
-        chip.appendChild(delBtn);
+        const first = new Date(yr, mo, 1).getDay();
+        const dim = new Date(yr, mo + 1, 0).getDate();
+        const prev = new Date(yr, mo, 0).getDate();
+        const cells = [];
 
-        // Tooltip only on label
-        chip.addEventListener('mouseenter', () => showTip(ev.title, ev.date, ev.chapter));
-        chip.addEventListener('mouseleave', hideTip);
-        chip.addEventListener('mousemove', moveTip);
+        for (let i = first - 1; i >= 0; i--)
+          cells.push({ d: prev - i, t: "p" });
+        for (let d = 1; d <= dim; d++) cells.push({ d, t: "c" });
+        let n = 1;
+        while (cells.length < 42) cells.push({ d: n++, t: "x" });
 
-        cell.appendChild(chip);
+        cells.forEach(({ d, t }) => {
+          let dateStr;
+          if (t === "c") {
+            dateStr = `${yr}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+          } else if (t === "p") {
+            const m = mo === 0 ? 12 : mo;
+            const y = mo === 0 ? yr - 1 : yr;
+            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+          } else {
+            const m = mo === 11 ? 1 : mo + 2;
+            const y = mo === 11 ? yr + 1 : yr;
+            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+          }
+
+          const cell = document.createElement("div");
+          cell.className =
+            "day-cell" +
+            (t !== "c" ? " other" : "") +
+            (dateStr === TODAY ? " today" : "");
+
+          const num = document.createElement("div");
+          num.className = "day-num";
+          num.textContent = d;
+          cell.appendChild(num);
+
+          events
+            .filter((e) => e.date === dateStr)
+            .forEach((ev, localIdx) => {
+              const globalIdx = events.indexOf(ev);
+              const chip = document.createElement("div");
+              chip.className = "chip";
+              chip.style.background = COLORS[ev.chapter] || "#888";
+
+              const label = document.createElement("span");
+              label.className = "chip-label";
+              label.textContent = ev.title;
+
+              const delBtn = document.createElement("button");
+              delBtn.className = "chip-del";
+              delBtn.title = "Delete event";
+              delBtn.innerHTML = "✕";
+              delBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                openDeleteModal(globalIdx, ev.title);
+              });
+
+              chip.appendChild(label);
+              chip.appendChild(delBtn);
+
+              // Tooltip only on label
+              chip.addEventListener("mouseenter", () =>
+                showTip(ev.title, ev.date, ev.chapter),
+              );
+              chip.addEventListener("mouseleave", hideTip);
+              chip.addEventListener("mousemove", moveTip);
+
+              cell.appendChild(chip);
+            });
+
+          grid.appendChild(cell);
+        });
+      }
+
+      /* Tooltip */
+      const tip = document.getElementById("tooltip");
+      let _tipTitle = "",
+        _tipDate = "",
+        _tipChapter = "";
+      function showTip(title, date, chapter) {
+        tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
+        tip.classList.add("on");
+      }
+      function hideTip() {
+        tip.classList.remove("on");
+      }
+      function moveTip(e) {
+        tip.style.left = e.clientX + 14 + "px";
+        tip.style.top = e.clientY - 44 + "px";
+      }
+
+      /* Nav */
+      document.getElementById("prevMonth").addEventListener("click", () => {
+        if (--mo < 0) {
+          mo = 11;
+          yr--;
+        }
+        renderCal();
+      });
+      document.getElementById("nextMonth").addEventListener("click", () => {
+        if (++mo > 11) {
+          mo = 0;
+          yr++;
+        }
+        renderCal();
       });
 
-      grid.appendChild(cell);
-    });
-  }
+      /* Modals */
+      function open(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function close(id) {
+        document.getElementById(id).classList.remove("open");
+      }
 
-  /* Tooltip */
-  const tip = document.getElementById('tooltip');
-  let _tipTitle='', _tipDate='', _tipChapter='';
-  function showTip(title, date, chapter) {
-    tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
-    tip.classList.add('on');
-  }
-  function hideTip() { tip.classList.remove('on'); }
-  function moveTip(e) {
-    tip.style.left = (e.clientX + 14) + 'px';
-    tip.style.top  = (e.clientY - 44) + 'px';
-  }
+      document.querySelectorAll(".overlay").forEach((o) => {
+        o.addEventListener("click", (e) => {
+          if (e.target === o) close(o.id);
+        });
+      });
 
-  /* Nav */
-  document.getElementById('prevMonth').addEventListener('click', () => {
-    if (--mo < 0) { mo = 11; yr--; }
-    renderCal();
-  });
-  document.getElementById('nextMonth').addEventListener('click', () => {
-    if (++mo > 11) { mo = 0; yr++; }
-    renderCal();
-  });
+      /* Auth */
+      document.getElementById("openAuth").addEventListener("click", () => {
+        document.getElementById("authEmail").value = "";
+        document.getElementById("authError").classList.remove("show");
+        open("authModal");
+      });
+      document
+        .getElementById("closeAuth")
+        .addEventListener("click", () => close("authModal"));
 
-  /* Modals */
-  function open(id)  { document.getElementById(id).classList.add('open'); }
-  function close(id) { document.getElementById(id).classList.remove('open'); }
+      document.getElementById("verifyBtn").addEventListener("click", () => {
+        const email = document
+          .getElementById("authEmail")
+          .value.trim()
+          .toLowerCase();
+        if (ALLOWED.includes(email)) {
+          document.getElementById("authError").classList.remove("show");
+          isAuthorized = true;
+          document.body.classList.add("can-delete");
+          close("authModal");
+          openEventModal();
+        } else {
+          document.getElementById("authError").classList.add("show");
+        }
+      });
 
-  document.querySelectorAll('.overlay').forEach(o => {
-    o.addEventListener('click', e => { if (e.target === o) close(o.id); });
-  });
+      document.getElementById("authEmail").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") document.getElementById("verifyBtn").click();
+      });
 
-  /* Auth */
-  document.getElementById('openAuth').addEventListener('click', () => {
-    document.getElementById('authEmail').value = '';
-    document.getElementById('authError').classList.remove('show');
-    open('authModal');
-  });
-  document.getElementById('closeAuth').addEventListener('click', () => close('authModal'));
+      /* Event modal */
+      function updatePreview() {
+        const ch = document.getElementById("evChapter").value;
+        const col = COLORS[ch] || "#888";
+        document.getElementById("chPreview").innerHTML =
+          `<span class="ch-badge" style="background:${col}">${ch}</span><span class="ch-note">Events will appear in this color</span>`;
+      }
 
-  document.getElementById('verifyBtn').addEventListener('click', () => {
-    const email = document.getElementById('authEmail').value.trim().toLowerCase();
-    if (ALLOWED.includes(email)) {
-      document.getElementById('authError').classList.remove('show');
-      isAuthorized = true;
-      document.body.classList.add('can-delete');
-      close('authModal');
-      openEventModal();
-    } else {
-      document.getElementById('authError').classList.add('show');
-    }
-  });
+      function openEventModal() {
+        document.getElementById("evDate").value = TODAY;
+        document.getElementById("evTitle").value = "";
+        document.getElementById("evChapter").value = "SB";
+        document.getElementById("evError").classList.remove("show");
+        document.getElementById("evSuccess").classList.remove("show");
+        updatePreview();
+        open("eventModal");
+      }
 
-  document.getElementById('authEmail').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('verifyBtn').click();
-  });
+      document
+        .getElementById("evChapter")
+        .addEventListener("change", updatePreview);
+      document
+        .getElementById("closeEvent")
+        .addEventListener("click", () => close("eventModal"));
+      document.getElementById("backBtn").addEventListener("click", () => {
+        close("eventModal");
+        open("authModal");
+      });
 
-  /* Event modal */
-  function updatePreview() {
-    const ch = document.getElementById('evChapter').value;
-    const col = COLORS[ch] || '#888';
-    document.getElementById('chPreview').innerHTML =
-      `<span class="ch-badge" style="background:${col}">${ch}</span><span class="ch-note">Events will appear in this color</span>`;
-  }
+      document.getElementById("saveEvt").addEventListener("click", () => {
+        const title = document.getElementById("evTitle").value.trim();
+        const date = document.getElementById("evDate").value;
+        const chapter = document.getElementById("evChapter").value;
+        const err = document.getElementById("evError");
+        const succ = document.getElementById("evSuccess");
 
-  function openEventModal() {
-    document.getElementById('evDate').value = TODAY;
-    document.getElementById('evTitle').value = '';
-    document.getElementById('evChapter').value = 'SB';
-    document.getElementById('evError').classList.remove('show');
-    document.getElementById('evSuccess').classList.remove('show');
-    updatePreview();
-    open('eventModal');
-  }
+        if (!title || !date || !chapter) {
+          err.classList.add("show");
+          succ.classList.remove("show");
+          return;
+        }
 
-  document.getElementById('evChapter').addEventListener('change', updatePreview);
-  document.getElementById('closeEvent').addEventListener('click', () => close('eventModal'));
-  document.getElementById('backBtn').addEventListener('click', () => { close('eventModal'); open('authModal'); });
+        err.classList.remove("show");
+        events.push({ title, date, chapter });
+        saveEvents();
 
-  document.getElementById('saveEvt').addEventListener('click', () => {
-    const title   = document.getElementById('evTitle').value.trim();
-    const date    = document.getElementById('evDate').value;
-    const chapter = document.getElementById('evChapter').value;
-    const err  = document.getElementById('evError');
-    const succ = document.getElementById('evSuccess');
+        const [y, m] = date.split("-").map(Number);
+        yr = y;
+        mo = m - 1;
+        renderCal();
 
-    if (!title || !date || !chapter) { err.classList.add('show'); succ.classList.remove('show'); return; }
+        succ.classList.add("show");
+        setTimeout(() => {
+          succ.classList.remove("show");
+          close("eventModal");
+        }, 1500);
+      });
 
-    err.classList.remove('show');
-    events.push({ title, date, chapter });
-    saveEvents();
+      /* Delete modal */
+      function openDeleteModal(idx, title) {
+        pendingDeleteIndex = idx;
+        document.getElementById("delEventName").textContent = `"${title}"`;
+        open("deleteModal");
+      }
 
-    const [y, m] = date.split('-').map(Number);
-    yr = y; mo = m - 1;
-    renderCal();
+      document
+        .getElementById("closeDelete")
+        .addEventListener("click", () => close("deleteModal"));
+      document
+        .getElementById("cancelDelete")
+        .addEventListener("click", () => close("deleteModal"));
 
-    succ.classList.add('show');
-    setTimeout(() => { succ.classList.remove('show'); close('eventModal'); }, 1500);
-  });
+      document.getElementById("confirmDelete").addEventListener("click", () => {
+        if (pendingDeleteIndex !== null) {
+          events.splice(pendingDeleteIndex, 1);
+          saveEvents();
+          pendingDeleteIndex = null;
+          renderCal();
+          close("deleteModal");
+        }
+      });
 
-  /* Delete modal */
-  function openDeleteModal(idx, title) {
-    pendingDeleteIndex = idx;
-    document.getElementById('delEventName').textContent = `"${title}"`;
-    open('deleteModal');
-  }
-
-  document.getElementById('closeDelete').addEventListener('click', () => close('deleteModal'));
-  document.getElementById('cancelDelete').addEventListener('click', () => close('deleteModal'));
-
-  document.getElementById('confirmDelete').addEventListener('click', () => {
-    if (pendingDeleteIndex !== null) {
-      events.splice(pendingDeleteIndex, 1);
-      saveEvents();
-      pendingDeleteIndex = null;
-      renderCal();
-      close('deleteModal');
-    }
-  });
-
-  /* Init */
-  initCal();
-</script>
-</body>
+      /* Init */
+      initCal();
+    </script>
+  </body>
 </html>
