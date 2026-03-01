@@ -17,7 +17,6 @@
         margin: 0;
         padding: 0;
       }
-
       :root {
         --bg: #0a0d14;
         --surface: #111520;
@@ -29,20 +28,15 @@
         --text-dim: rgba(232, 236, 244, 0.5);
         --text-muted: rgba(232, 236, 244, 0.28);
         --accent: #4f8ef7;
-        --accent-glow: rgba(79, 142, 247, 0.25);
-
-        /* Chapter palette — vivid against dark bg */
-        --sb: #0b419f;
-        --ias: #045514;
-        --wie: #8c0896;
-        --ras: #b9184e;
-        --cis: #278ed7;
-        --cs: #f38816;
-
         --radius: 16px;
         --radius-sm: 10px;
+        --sb: #0b49b3;
+        --ias: #045514;
+        --wie: #a50ab0;
+        --ras: #b9184e;
+        --cis: #2577e3;
+        --cs: #fa880e;
       }
-
       body {
         font-family: "Space Grotesk", sans-serif;
         background: var(--bg);
@@ -50,8 +44,6 @@
         min-height: 100vh;
         overflow-x: hidden;
       }
-
-      /* ---- NOISE OVERLAY ---- */
       body::before {
         content: "";
         position: fixed;
@@ -60,8 +52,6 @@
         pointer-events: none;
         z-index: 0;
       }
-
-      /* ---- AMBIENT GLOW ---- */
       body::after {
         content: "";
         position: fixed;
@@ -79,7 +69,7 @@
         z-index: 0;
       }
 
-      /* ---- HEADER ---- */
+      /* HEADER */
       header {
         position: sticky;
         top: 0;
@@ -89,27 +79,22 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(10, 13, 20, 0.8);
+        background: rgba(10, 13, 20, 0.85);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border);
       }
-
       .brand {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
       }
-
       .brand-mark {
-        width: 44px;
-        height: 44px;
+        width: 42px;
+        height: 42px;
         object-fit: contain;
-        border-radius: 0;
-        background: transparent;
         display: block;
       }
-
       .brand-text strong {
         display: block;
         font-family: "Fraunces", serif;
@@ -118,14 +103,12 @@
         color: var(--text);
         letter-spacing: -0.2px;
       }
-
       .brand-text span {
         font-size: 0.7rem;
         color: var(--text-muted);
         letter-spacing: 1.2px;
         text-transform: uppercase;
       }
-
       .add-btn {
         display: flex;
         align-items: center;
@@ -139,22 +122,47 @@
         font-weight: 600;
         font-size: 0.85rem;
         cursor: pointer;
-        letter-spacing: 0.2px;
         box-shadow: 0 4px 20px rgba(79, 142, 247, 0.35);
         transition: all 0.2s ease;
       }
-
       .add-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 30px rgba(79, 142, 247, 0.5);
       }
-
       .add-btn svg {
         width: 15px;
         height: 15px;
       }
 
-      /* ---- MAIN ---- */
+      /* LIVE BADGE */
+      .live-badge {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #22d49a;
+        letter-spacing: 0.4px;
+      }
+      .live-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #22d49a;
+        box-shadow: 0 0 8px #22d49a;
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      /* MAIN */
       main {
         position: relative;
         z-index: 1;
@@ -163,40 +171,40 @@
         padding: 36px 24px 80px;
       }
 
-      /* ---- PAGE TITLE ---- */
+      /* PAGE HEADER */
       .page-header {
-        margin-bottom: 28px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
       }
-
       .page-title {
         font-family: "Fraunces", serif;
         font-weight: 300;
-        font-size: clamp(1.8rem, 4vw, 2.8rem);
+        font-size: clamp(1.6rem, 4vw, 2.6rem);
         color: var(--text);
         letter-spacing: -1px;
         line-height: 1.1;
       }
-
       .page-title em {
         font-style: italic;
         color: var(--accent);
       }
-
       .page-subtitle {
-        margin-top: 6px;
-        font-size: 0.85rem;
+        margin-top: 4px;
+        font-size: 0.82rem;
         color: var(--text-dim);
-        font-weight: 400;
       }
 
-      /* ---- LEGEND ---- */
+      /* LEGEND */
       .legend {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
       }
-
       .legend-item {
         display: flex;
         align-items: center;
@@ -212,12 +220,10 @@
           border-color 0.15s,
           color 0.15s;
       }
-
       .legend-item:hover {
         border-color: var(--border-hover);
         color: var(--text);
       }
-
       .legend-dot {
         width: 8px;
         height: 8px;
@@ -225,22 +231,20 @@
         flex-shrink: 0;
       }
 
-      /* ---- CALENDAR CARD ---- */
+      /* CALENDAR CARD */
       .calendar-card {
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius);
         overflow: hidden;
       }
-
       .calendar-nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 18px 24px;
+        padding: 16px 24px;
         border-bottom: 1px solid var(--border);
       }
-
       .nav-btn {
         width: 34px;
         height: 34px;
@@ -254,71 +258,62 @@
         color: var(--text-dim);
         transition: all 0.18s;
       }
-
       .nav-btn:hover {
         background: var(--accent);
         border-color: var(--accent);
         color: #fff;
         box-shadow: 0 0 16px rgba(79, 142, 247, 0.3);
       }
-
       .nav-btn svg {
         width: 14px;
         height: 14px;
       }
-
       .month-label {
         font-family: "Fraunces", serif;
         font-weight: 600;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         color: var(--text);
         letter-spacing: -0.3px;
       }
 
-      /* ---- GRID ---- */
+      /* GRID */
       .cal-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
       }
-
       .day-hdr {
         padding: 10px 4px 8px;
         text-align: center;
         font-size: 0.67rem;
         font-weight: 600;
-        letter-spacing: 1.2px;
+        letter-spacing: 1px;
         text-transform: uppercase;
         color: var(--text-muted);
         border-bottom: 1px solid var(--border);
       }
-
       .day-cell {
         min-height: 96px;
-        padding: 8px 7px 6px;
+        padding: 7px 6px 5px;
         border-right: 1px solid var(--border);
         border-bottom: 1px solid var(--border);
-        vertical-align: top;
         transition: background 0.15s;
+        overflow: hidden;
       }
-
       .day-cell:nth-child(7n) {
         border-right: none;
       }
-
       .day-cell.other {
         background: rgba(255, 255, 255, 0.01);
       }
       .day-cell.other .day-num {
         color: var(--text-muted);
       }
-
       .day-cell.today .day-num {
         background: var(--accent);
         color: #fff;
         border-radius: 50%;
         box-shadow: 0 0 12px rgba(79, 142, 247, 0.5);
       }
-
       .day-num {
         width: 24px;
         height: 24px;
@@ -331,33 +326,26 @@
         margin-bottom: 4px;
       }
 
-      /* ---- EVENT CHIPS ---- */
+      /* CHIPS */
       .chip {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 4px;
-        font-size: 0.75rem;
+        gap: 3px;
+        font-size: 0.72rem;
         font-weight: 600;
-        border-radius: 6px;
-        padding: 5px 7px;
-        margin-bottom: 4px;
+        border-radius: 5px;
+        padding: 4px 6px;
+        margin-bottom: 3px;
         color: #fff;
-        cursor: default;
-        transition:
-          opacity 0.12s,
-          transform 0.12s;
-        letter-spacing: 0.1px;
         width: 100%;
-        box-sizing: border-box;
-        min-height: 26px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+        min-height: 24px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+        transition: opacity 0.12s;
       }
-
       .chip:hover {
-        opacity: 0.9;
+        opacity: 0.88;
       }
-
       .chip-label {
         flex: 1;
         white-space: nowrap;
@@ -365,43 +353,52 @@
         text-overflow: ellipsis;
         min-width: 0;
       }
-
       .chip-del {
         flex-shrink: 0;
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.22);
         border: none;
         color: #fff;
-        font-size: 10px;
-        line-height: 1;
+        font-size: 9px;
         cursor: pointer;
         display: none;
         align-items: center;
         justify-content: center;
-        transition:
-          background 0.14s,
-          transform 0.14s;
+        transition: background 0.14s;
         padding: 0;
         font-weight: 700;
       }
-
       .chip-del:hover {
         background: rgba(255, 80, 80, 0.7);
-        transform: scale(1.15);
       }
-
       body.can-delete .chip-del {
         display: flex;
       }
 
-      /* ---- DELETE CONFIRM MODAL ---- */
-      .del-event-name {
-        font-weight: 600;
+      /* TOOLTIP */
+      .tooltip {
+        position: fixed;
+        background: var(--surface-3);
+        border: 1px solid var(--border-hover);
         color: var(--text);
+        padding: 8px 12px;
+        border-radius: var(--radius-sm);
+        font-size: 0.78rem;
+        pointer-events: none;
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.14s;
+        max-width: 200px;
+        line-height: 1.5;
+        backdrop-filter: blur(10px);
+      }
+      .tooltip.on {
+        opacity: 1;
       }
 
+      /* DELETE MODAL EXTRA */
       .btn-danger {
         width: 100%;
         padding: 12px;
@@ -416,43 +413,12 @@
         transition: all 0.18s;
         box-shadow: 0 4px 18px rgba(255, 94, 94, 0.3);
       }
-
       .btn-danger:hover {
         opacity: 0.88;
         transform: translateY(-1px);
-        box-shadow: 0 8px 24px rgba(255, 94, 94, 0.45);
       }
 
-      /* ---- TOOLTIP ---- */
-      .tooltip {
-        position: fixed;
-        background: var(--surface-3);
-        border: 1px solid var(--border-hover);
-        color: var(--text);
-        padding: 9px 13px;
-        border-radius: var(--radius-sm);
-        font-size: 0.78rem;
-        pointer-events: none;
-        z-index: 999;
-        opacity: 0;
-        transition: opacity 0.14s;
-        max-width: 200px;
-        line-height: 1.5;
-        backdrop-filter: blur(10px);
-      }
-
-      .tooltip.on {
-        opacity: 1;
-      }
-      .tooltip strong {
-        color: var(--text);
-        font-weight: 600;
-      }
-      .tooltip small {
-        color: var(--text-dim);
-      }
-
-      /* ---- MODALS ---- */
+      /* MODALS */
       .overlay {
         position: fixed;
         inset: 0;
@@ -468,12 +434,10 @@
         transition: opacity 0.22s ease;
         padding: 20px;
       }
-
       .overlay.open {
         opacity: 1;
         pointer-events: all;
       }
-
       .modal {
         background: var(--surface);
         border: 1px solid var(--border-hover);
@@ -485,43 +449,36 @@
         transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
       }
-
       .overlay.open .modal {
         transform: translateY(0) scale(1);
       }
-
       .modal-head {
-        padding: 24px 28px;
+        padding: 22px 28px;
         border-bottom: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
-
       .modal-head-left {
         display: flex;
         flex-direction: column;
         gap: 2px;
       }
-
       .modal-icon {
         font-size: 1.2rem;
         line-height: 1;
       }
-
       .modal-title {
         font-family: "Fraunces", serif;
         font-weight: 600;
-        font-size: 1.1rem;
+        font-size: 1.05rem;
         color: var(--text);
         letter-spacing: -0.2px;
       }
-
       .modal-sub {
-        font-size: 0.75rem;
+        font-size: 0.74rem;
         color: var(--text-muted);
       }
-
       .close-btn {
         width: 28px;
         height: 28px;
@@ -536,16 +493,13 @@
         font-size: 0.85rem;
         transition: all 0.15s;
       }
-
       .close-btn:hover {
         background: var(--surface-3);
         color: var(--text);
       }
-
       .modal-body {
         padding: 24px 28px;
       }
-
       label {
         display: block;
         font-size: 0.72rem;
@@ -555,11 +509,9 @@
         color: var(--text-muted);
         margin-bottom: 7px;
       }
-
       .form-group {
         margin-bottom: 18px;
       }
-
       input[type="text"],
       input[type="email"],
       input[type="date"],
@@ -579,17 +531,14 @@
         appearance: none;
         -webkit-appearance: none;
       }
-
       input:focus,
       select:focus {
         border-color: var(--accent);
         box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
       }
-
       input::placeholder {
         color: var(--text-muted);
       }
-
       select {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555e7a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
@@ -597,11 +546,9 @@
         padding-right: 36px;
         cursor: pointer;
       }
-
       select option {
         background: #1f263d;
       }
-
       .msg {
         border-radius: var(--radius-sm);
         padding: 10px 14px;
@@ -609,23 +556,19 @@
         margin-bottom: 14px;
         display: none;
       }
-
       .msg.show {
         display: block;
       }
-
       .msg-error {
         background: rgba(255, 94, 94, 0.1);
         border: 1px solid rgba(255, 94, 94, 0.3);
         color: #ff8080;
       }
-
       .msg-success {
         background: rgba(34, 212, 154, 0.1);
         border: 1px solid rgba(34, 212, 154, 0.3);
         color: #22d49a;
       }
-
       .btn {
         width: 100%;
         padding: 12px;
@@ -638,39 +581,32 @@
         transition: all 0.18s;
         letter-spacing: 0.2px;
       }
-
       .btn-primary {
         background: var(--accent);
         color: #fff;
         box-shadow: 0 4px 18px rgba(79, 142, 247, 0.3);
       }
-
       .btn-primary:hover {
         opacity: 0.88;
         transform: translateY(-1px);
-        box-shadow: 0 8px 28px rgba(79, 142, 247, 0.45);
       }
-
       .btn-ghost {
         background: transparent;
         color: var(--text-dim);
         border: 1px solid var(--border);
         margin-top: 10px;
       }
-
       .btn-ghost:hover {
         border-color: var(--border-hover);
         color: var(--text);
         background: var(--surface-2);
       }
-
       .chapter-preview {
         display: flex;
         align-items: center;
         gap: 8px;
         margin-top: 8px;
       }
-
       .ch-badge {
         font-size: 0.7rem;
         font-weight: 700;
@@ -679,39 +615,12 @@
         padding: 3px 10px;
         letter-spacing: 0.5px;
       }
-
       .ch-note {
         font-size: 0.73rem;
         color: var(--text-muted);
       }
 
-      /* ---- RESPONSIVE ---- */
-      @media (max-width: 640px) {
-        header {
-          padding: 0 16px;
-        }
-        main {
-          padding: 20px 12px 60px;
-        }
-        .day-cell {
-          min-height: 60px;
-          padding: 4px 3px;
-        }
-        .day-num {
-          font-size: 0.7rem;
-          width: 20px;
-          height: 20px;
-        }
-        .chip {
-          font-size: 0.6rem;
-          padding: 1px 4px;
-        }
-        .month-label {
-          font-size: 1rem;
-        }
-      }
-
-      /* ---- CALENDAR LOAD ANIMATION ---- */
+      /* ANIMATIONS */
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -722,22 +631,262 @@
           transform: translateY(0);
         }
       }
-
       .calendar-card {
         animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
-
       .legend {
         animation: fadeUp 0.4s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
       }
-
       .page-header {
         animation: fadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+      }
+
+      /* =====================
+       RESPONSIVE / MOBILE
+    ===================== */
+      @media (max-width: 860px) {
+        header {
+          padding: 0 20px;
+        }
+        main {
+          padding: 24px 16px 60px;
+        }
+        .day-cell {
+          min-height: 76px;
+          padding: 5px 3px;
+        }
+        .chip {
+          font-size: 0.65rem;
+          padding: 3px 4px;
+          min-height: 20px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        header {
+          padding: 0 14px;
+          height: 58px;
+        }
+        .brand-mark {
+          width: 34px;
+          height: 34px;
+        }
+        .brand-text strong {
+          font-size: 0.85rem;
+        }
+        .brand-text span {
+          display: none;
+        }
+        .add-btn {
+          padding: 8px 13px;
+          font-size: 0.78rem;
+        }
+        .add-btn svg {
+          width: 13px;
+          height: 13px;
+        }
+        main {
+          padding: 14px 10px 50px;
+        }
+        .page-title {
+          font-size: 1.5rem;
+        }
+        .page-subtitle {
+          font-size: 0.76rem;
+        }
+        .legend {
+          gap: 5px;
+          margin-bottom: 12px;
+        }
+        .legend-item {
+          font-size: 0.69rem;
+          padding: 4px 9px 4px 7px;
+        }
+
+        /* Compact grid for mobile — keep the 7-column grid but shrink it */
+        .day-hdr {
+          font-size: 0.58rem;
+          padding: 7px 2px 6px;
+          letter-spacing: 0;
+        }
+        .day-cell {
+          min-height: 52px;
+          padding: 3px 2px 2px;
+        }
+        .day-num {
+          width: 18px;
+          height: 18px;
+          font-size: 0.66rem;
+          margin-bottom: 2px;
+        }
+
+        /* On mobile, chips show only a colored dot + truncated text */
+        .chip {
+          font-size: 0;
+          padding: 0;
+          min-height: 0;
+          margin-bottom: 2px;
+          border-radius: 3px;
+          height: 6px;
+          opacity: 0.9;
+        }
+        .chip-label {
+          display: none;
+        }
+        .chip-del {
+          display: none !important;
+        }
+
+        /* Show full event list below grid on mobile */
+        .mobile-list {
+          display: block;
+        }
+
+        /* Modals as bottom sheet */
+        .overlay {
+          padding: 0;
+          align-items: flex-end;
+        }
+        .modal {
+          max-width: 100%;
+          border-radius: var(--radius) var(--radius) 0 0;
+          border-bottom: none;
+        }
+        .modal-body {
+          padding: 20px 20px 36px;
+        }
+        .modal-head {
+          padding: 18px 20px;
+        }
+
+        .live-badge span {
+          display: none;
+        }
+      }
+
+      /* MOBILE EVENT LIST (hidden on desktop) */
+      .mobile-list {
+        display: none;
+      }
+
+      .mobile-list-inner {
+        border-top: 1px solid var(--border);
+        padding: 16px 12px 8px;
+      }
+
+      .mobile-list-title {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 10px;
+        padding: 0 4px;
+      }
+
+      .ml-empty {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+      }
+
+      .ml-group {
+        margin-bottom: 14px;
+      }
+
+      .ml-date-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0 4px;
+        margin-bottom: 6px;
+      }
+
+      .ml-day-num {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+        color: var(--text);
+      }
+
+      .ml-day-num.today {
+        background: var(--accent);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(79, 142, 247, 0.45);
+      }
+
+      .ml-day-name {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+      }
+
+      .ml-event {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .ml-event-info {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .ml-event-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .ml-event-meta {
+        font-size: 0.72rem;
+        opacity: 0.78;
+        margin-top: 1px;
+      }
+
+      .ml-del {
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.18);
+        border: none;
+        color: #fff;
+        font-size: 11px;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin-left: 8px;
+        transition: background 0.14s;
+      }
+
+      .ml-del:hover {
+        background: rgba(255, 80, 80, 0.6);
+      }
+      body.can-delete .ml-del {
+        display: flex;
       }
     </style>
   </head>
   <body>
-    <!-- HEADER -->
     <header>
       <div class="brand">
         <img
@@ -750,28 +899,39 @@
           <span>Event Management</span>
         </div>
       </div>
-      <button class="add-btn" id="openAuth">
-        <svg
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2.5"
+      <div style="display: flex; align-items: center; gap: 16px">
+        <div
+          class="live-badge"
+          id="liveBadge"
+          title="Auto-syncing every 5 seconds"
         >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M12 4v16m8-8H4"
-          />
-        </svg>
-        Add Event
-      </button>
+          <div class="live-dot"></div>
+          <span>LIVE</span>
+        </div>
+        <button class="add-btn" id="openAuth">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 4v16m8-8H4"
+            />
+          </svg>
+          Add Event
+        </button>
+      </div>
     </header>
 
-    <!-- MAIN -->
     <main>
       <div class="page-header">
-        <h1 class="page-title">Chapter <em>Events</em></h1>
-        <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
+        <div>
+          <h1 class="page-title">Chapter <em>Events</em></h1>
+          <p class="page-subtitle">IEEE EPI Student Branch — Event calendar</p>
+        </div>
       </div>
 
       <div class="legend">
@@ -828,10 +988,10 @@
           </button>
         </div>
         <div class="cal-grid" id="calGrid"></div>
+        <div class="mobile-list" id="mobileList"></div>
       </div>
     </main>
 
-    <!-- TOOLTIP -->
     <div class="tooltip" id="tooltip"></div>
 
     <!-- AUTH MODAL -->
@@ -923,7 +1083,7 @@
       </div>
     </div>
 
-    <!-- DELETE CONFIRM MODAL -->
+    <!-- DELETE MODAL -->
     <div class="overlay" id="deleteModal">
       <div class="modal">
         <div class="modal-head">
@@ -944,7 +1104,7 @@
             "
           >
             Are you sure you want to delete
-            <span class="del-event-name" id="delEventName"></span>?
+            <strong id="delEventName" style="color: var(--text)"></strong>?
           </p>
           <button class="btn btn-danger" id="confirmDelete">
             Delete Event
@@ -964,9 +1124,7 @@
         "dhia.zrelli@ieee.org",
         "bahasboui2001@gmail.com",
       ];
-      let isAuthorized = false;
-      let pendingDeleteIndex = null;
-
+      const STORAGE_KEY = "ieee_epi_events_v2";
       const COLORS = {
         SB: "#0b49b3",
         IAS: "#045514",
@@ -975,31 +1133,6 @@
         CIS: "#2577e3",
         CS: "#fa880e",
       };
-
-      function today(delta = 0) {
-        const d = new Date();
-        d.setDate(d.getDate() + delta);
-        return d.toISOString().split("T")[0];
-      }
-
-      const TODAY = today();
-
-      let events = JSON.parse(
-        localStorage.getItem("ieee_epi_events") || "null",
-      ) || [
-        { title: "SB General Meeting", date: today(0), chapter: "SB" },
-        { title: "RAS Workshop", date: today(3), chapter: "RAS" },
-        { title: "WIE Networking Event", date: today(7), chapter: "WIE" },
-        { title: "CIS Tech Talk", date: today(-4), chapter: "CIS" },
-        { title: "CS Hackathon", date: today(10), chapter: "CS" },
-        { title: "IAS Industry Seminar", date: today(14), chapter: "IAS" },
-      ];
-
-      function saveEvents() {
-        localStorage.setItem("ieee_epi_events", JSON.stringify(events));
-      }
-
-      /* Calendar */
       const MONTHS = [
         "January",
         "February",
@@ -1015,9 +1148,75 @@
         "December",
       ];
       const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      const DAY_NAMES_FULL = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
 
+      let isAuthorized = false;
+      let pendingDeleteIndex = null;
       let yr, mo;
 
+      function todayStr(delta = 0) {
+        const d = new Date();
+        d.setDate(d.getDate() + delta);
+        return d.toISOString().split("T")[0];
+      }
+      const TODAY = todayStr();
+
+      /* ---- EVENTS STATE ---- */
+      function loadEvents() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        // Default sample events
+        return [
+          { title: "SB General Meeting", date: todayStr(0), chapter: "SB" },
+        ];
+      }
+
+      let events = loadEvents();
+
+      function saveEvents() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+        // Broadcast to other tabs
+        try {
+          bc.postMessage({ type: "update", events });
+        } catch (e) {}
+      }
+
+      /* ---- REAL-TIME SYNC ---- */
+      // BroadcastChannel: instant sync between tabs on same device
+      let bc;
+      try {
+        bc = new BroadcastChannel("ieee_epi_sync");
+        bc.onmessage = (e) => {
+          if (e.data && e.data.type === "update") {
+            events = e.data.events;
+            renderCal();
+          }
+        };
+      } catch (e) {
+        bc = { postMessage: () => {} };
+      }
+
+      // Polling: refresh from localStorage every 5s (catches updates from other devices on shared storage)
+      setInterval(() => {
+        const fresh = loadEvents();
+        const freshStr = JSON.stringify(fresh);
+        if (freshStr !== JSON.stringify(events)) {
+          events = fresh;
+          renderCal();
+        }
+      }, 5000);
+
+      /* ---- CALENDAR RENDER ---- */
       function initCal() {
         const now = new Date();
         yr = now.getFullYear();
@@ -1027,7 +1226,7 @@
 
       function renderCal() {
         document.getElementById("monthLabel").textContent =
-          `${MONTHS[mo]} ${yr}`;
+          MONTHS[mo] + " " + yr;
         const grid = document.getElementById("calGrid");
         grid.innerHTML = "";
 
@@ -1040,34 +1239,49 @@
 
         const first = new Date(yr, mo, 1).getDay();
         const dim = new Date(yr, mo + 1, 0).getDate();
-        const prev = new Date(yr, mo, 0).getDate();
+        const prevDim = new Date(yr, mo, 0).getDate();
         const cells = [];
 
         for (let i = first - 1; i >= 0; i--)
-          cells.push({ d: prev - i, t: "p" });
+          cells.push({ d: prevDim - i, t: "p" });
         for (let d = 1; d <= dim; d++) cells.push({ d, t: "c" });
         let n = 1;
         while (cells.length < 42) cells.push({ d: n++, t: "x" });
 
         cells.forEach(({ d, t }) => {
-          let dateStr;
-          if (t === "c") {
-            dateStr = `${yr}-${String(mo + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-          } else if (t === "p") {
-            const m = mo === 0 ? 12 : mo;
-            const y = mo === 0 ? yr - 1 : yr;
-            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+          let ds;
+          if (t === "c")
+            ds =
+              yr +
+              "-" +
+              String(mo + 1).padStart(2, "0") +
+              "-" +
+              String(d).padStart(2, "0");
+          else if (t === "p") {
+            const m = mo === 0 ? 12 : mo,
+              y = mo === 0 ? yr - 1 : yr;
+            ds =
+              y +
+              "-" +
+              String(m).padStart(2, "0") +
+              "-" +
+              String(d).padStart(2, "0");
           } else {
-            const m = mo === 11 ? 1 : mo + 2;
-            const y = mo === 11 ? yr + 1 : yr;
-            dateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+            const m = mo === 11 ? 1 : mo + 2,
+              y = mo === 11 ? yr + 1 : yr;
+            ds =
+              y +
+              "-" +
+              String(m).padStart(2, "0") +
+              "-" +
+              String(d).padStart(2, "0");
           }
 
           const cell = document.createElement("div");
           cell.className =
             "day-cell" +
             (t !== "c" ? " other" : "") +
-            (dateStr === TODAY ? " today" : "");
+            (ds === TODAY ? " today" : "");
 
           const num = document.createElement("div");
           num.className = "day-num";
@@ -1075,50 +1289,128 @@
           cell.appendChild(num);
 
           events
-            .filter((e) => e.date === dateStr)
-            .forEach((ev, localIdx) => {
-              const globalIdx = events.indexOf(ev);
+            .filter((e) => e.date === ds)
+            .forEach((ev) => {
+              const idx = events.indexOf(ev);
               const chip = document.createElement("div");
               chip.className = "chip";
               chip.style.background = COLORS[ev.chapter] || "#888";
-
-              const label = document.createElement("span");
-              label.className = "chip-label";
-              label.textContent = ev.title;
-
-              const delBtn = document.createElement("button");
-              delBtn.className = "chip-del";
-              delBtn.title = "Delete event";
-              delBtn.innerHTML = "✕";
-              delBtn.addEventListener("click", (e) => {
+              const lbl = document.createElement("span");
+              lbl.className = "chip-label";
+              lbl.textContent = ev.title;
+              const del = document.createElement("button");
+              del.className = "chip-del";
+              del.innerHTML = "✕";
+              del.addEventListener("click", (e) => {
                 e.stopPropagation();
-                openDeleteModal(globalIdx, ev.title);
+                openDeleteModal(idx, ev.title);
               });
-
-              chip.appendChild(label);
-              chip.appendChild(delBtn);
-
-              // Tooltip only on label
+              chip.appendChild(lbl);
+              chip.appendChild(del);
               chip.addEventListener("mouseenter", () =>
                 showTip(ev.title, ev.date, ev.chapter),
               );
               chip.addEventListener("mouseleave", hideTip);
               chip.addEventListener("mousemove", moveTip);
-
               cell.appendChild(chip);
             });
 
           grid.appendChild(cell);
         });
+
+        renderMobileList();
       }
 
-      /* Tooltip */
+      /* ---- MOBILE EVENT LIST ---- */
+      function renderMobileList() {
+        const container = document.getElementById("mobileList");
+        container.innerHTML = "";
+
+        const inner = document.createElement("div");
+        inner.className = "mobile-list-inner";
+
+        const titleEl = document.createElement("div");
+        titleEl.className = "mobile-list-title";
+        titleEl.textContent = MONTHS[mo] + " Events";
+        inner.appendChild(titleEl);
+
+        const dim = new Date(yr, mo + 1, 0).getDate();
+        let hasAny = false;
+
+        for (let d = 1; d <= dim; d++) {
+          const ds =
+            yr +
+            "-" +
+            String(mo + 1).padStart(2, "0") +
+            "-" +
+            String(d).padStart(2, "0");
+          const dayEvs = events.filter((e) => e.date === ds);
+          if (!dayEvs.length) continue;
+          hasAny = true;
+
+          const group = document.createElement("div");
+          group.className = "ml-group";
+
+          const dateRow = document.createElement("div");
+          dateRow.className = "ml-date-row";
+          const dayNum = document.createElement("div");
+          dayNum.className = "ml-day-num" + (ds === TODAY ? " today" : "");
+          dayNum.textContent = d;
+          const dayName = document.createElement("div");
+          dayName.className = "ml-day-name";
+          dayName.textContent = DAY_NAMES_FULL[new Date(yr, mo, d).getDay()];
+          dateRow.appendChild(dayNum);
+          dateRow.appendChild(dayName);
+          group.appendChild(dateRow);
+
+          dayEvs.forEach((ev) => {
+            const idx = events.indexOf(ev);
+            const item = document.createElement("div");
+            item.className = "ml-event";
+            item.style.background = COLORS[ev.chapter] || "#888";
+            const info = document.createElement("div");
+            info.className = "ml-event-info";
+            const t = document.createElement("div");
+            t.className = "ml-event-title";
+            t.textContent = ev.title;
+            const m = document.createElement("div");
+            m.className = "ml-event-meta";
+            m.textContent = ev.chapter + " Chapter";
+            info.appendChild(t);
+            info.appendChild(m);
+            const del = document.createElement("button");
+            del.className = "ml-del";
+            del.innerHTML = "✕";
+            del.addEventListener("click", () => openDeleteModal(idx, ev.title));
+            item.appendChild(info);
+            item.appendChild(del);
+            group.appendChild(item);
+          });
+
+          inner.appendChild(group);
+        }
+
+        if (!hasAny) {
+          const empty = document.createElement("div");
+          empty.className = "ml-empty";
+          empty.textContent = "No events this month";
+          inner.appendChild(empty);
+        }
+
+        container.appendChild(inner);
+      }
+
+      /* ---- TOOLTIP ---- */
       const tip = document.getElementById("tooltip");
-      let _tipTitle = "",
-        _tipDate = "",
-        _tipChapter = "";
       function showTip(title, date, chapter) {
-        tip.innerHTML = `<strong>${title}</strong><br><small>${date} · ${chapter}</small>`;
+        tip.innerHTML =
+          "<strong>" +
+          title +
+          "</strong><br><small>" +
+          date +
+          " · " +
+          chapter +
+          "</small>";
         tip.classList.add("on");
       }
       function hideTip() {
@@ -1129,7 +1421,7 @@
         tip.style.top = e.clientY - 44 + "px";
       }
 
-      /* Nav */
+      /* ---- NAV ---- */
       document.getElementById("prevMonth").addEventListener("click", () => {
         if (--mo < 0) {
           mo = 11;
@@ -1145,58 +1437,58 @@
         renderCal();
       });
 
-      /* Modals */
-      function open(id) {
+      /* ---- MODALS ---- */
+      function openM(id) {
         document.getElementById(id).classList.add("open");
       }
-      function close(id) {
+      function closeM(id) {
         document.getElementById(id).classList.remove("open");
       }
-
       document.querySelectorAll(".overlay").forEach((o) => {
         o.addEventListener("click", (e) => {
-          if (e.target === o) close(o.id);
+          if (e.target === o) closeM(o.id);
         });
       });
 
-      /* Auth */
+      /* AUTH */
       document.getElementById("openAuth").addEventListener("click", () => {
         document.getElementById("authEmail").value = "";
         document.getElementById("authError").classList.remove("show");
-        open("authModal");
+        openM("authModal");
       });
       document
         .getElementById("closeAuth")
-        .addEventListener("click", () => close("authModal"));
-
+        .addEventListener("click", () => closeM("authModal"));
       document.getElementById("verifyBtn").addEventListener("click", () => {
         const email = document
           .getElementById("authEmail")
           .value.trim()
           .toLowerCase();
         if (ALLOWED.includes(email)) {
-          document.getElementById("authError").classList.remove("show");
           isAuthorized = true;
           document.body.classList.add("can-delete");
-          close("authModal");
+          document.getElementById("authError").classList.remove("show");
+          closeM("authModal");
           openEventModal();
         } else {
           document.getElementById("authError").classList.add("show");
         }
       });
-
       document.getElementById("authEmail").addEventListener("keydown", (e) => {
         if (e.key === "Enter") document.getElementById("verifyBtn").click();
       });
 
-      /* Event modal */
+      /* EVENT MODAL */
       function updatePreview() {
         const ch = document.getElementById("evChapter").value;
         const col = COLORS[ch] || "#888";
         document.getElementById("chPreview").innerHTML =
-          `<span class="ch-badge" style="background:${col}">${ch}</span><span class="ch-note">Events will appear in this color</span>`;
+          '<span class="ch-badge" style="background:' +
+          col +
+          '">' +
+          ch +
+          '</span><span class="ch-note">Events will appear in this color</span>';
       }
-
       function openEventModal() {
         document.getElementById("evDate").value = TODAY;
         document.getElementById("evTitle").value = "";
@@ -1204,74 +1496,65 @@
         document.getElementById("evError").classList.remove("show");
         document.getElementById("evSuccess").classList.remove("show");
         updatePreview();
-        open("eventModal");
+        openM("eventModal");
       }
-
       document
         .getElementById("evChapter")
         .addEventListener("change", updatePreview);
       document
         .getElementById("closeEvent")
-        .addEventListener("click", () => close("eventModal"));
+        .addEventListener("click", () => closeM("eventModal"));
       document.getElementById("backBtn").addEventListener("click", () => {
-        close("eventModal");
-        open("authModal");
+        closeM("eventModal");
+        openM("authModal");
       });
-
       document.getElementById("saveEvt").addEventListener("click", () => {
         const title = document.getElementById("evTitle").value.trim();
         const date = document.getElementById("evDate").value;
         const chapter = document.getElementById("evChapter").value;
-        const err = document.getElementById("evError");
-        const succ = document.getElementById("evSuccess");
-
+        const err = document.getElementById("evError"),
+          succ = document.getElementById("evSuccess");
         if (!title || !date || !chapter) {
           err.classList.add("show");
           succ.classList.remove("show");
           return;
         }
-
         err.classList.remove("show");
         events.push({ title, date, chapter });
         saveEvents();
-
         const [y, m] = date.split("-").map(Number);
         yr = y;
         mo = m - 1;
         renderCal();
-
         succ.classList.add("show");
         setTimeout(() => {
           succ.classList.remove("show");
-          close("eventModal");
+          closeM("eventModal");
         }, 1500);
       });
 
-      /* Delete modal */
+      /* DELETE */
       function openDeleteModal(idx, title) {
         pendingDeleteIndex = idx;
-        document.getElementById("delEventName").textContent = `"${title}"`;
-        open("deleteModal");
+        document.getElementById("delEventName").textContent = '"' + title + '"';
+        openM("deleteModal");
       }
-
       document
         .getElementById("closeDelete")
-        .addEventListener("click", () => close("deleteModal"));
+        .addEventListener("click", () => closeM("deleteModal"));
       document
         .getElementById("cancelDelete")
-        .addEventListener("click", () => close("deleteModal"));
-
+        .addEventListener("click", () => closeM("deleteModal"));
       document.getElementById("confirmDelete").addEventListener("click", () => {
         if (pendingDeleteIndex !== null) {
           events.splice(pendingDeleteIndex, 1);
           saveEvents();
           pendingDeleteIndex = null;
           renderCal();
-          close("deleteModal");
+          closeM("deleteModal");
         }
       });
 
-      /* Init */
       initCal();
     </script>
   </body>
